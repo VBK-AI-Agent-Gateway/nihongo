@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nihongo Master · 日英学习</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--line:#334155;--accent:#58cc02;--accent2:#1cb0f6;--accent3:#ff9600;--text:#e2e8f0;--muted:#94a3b8;--err:#ff4b4b;--gold:#ffc800}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",system-ui,-apple-system,"Hiragino Sans","Microsoft YaHei",sans-serif;background:radial-gradient(1200px 600px at 70% -10%,#1d3a5f 0%,var(--bg) 60%);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 10px 40px}
+header{width:100%;max-width:920px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+h1{font-size:26px;letter-spacing:2px}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);font-size:13px;margin-top:4px}
+.stats{display:flex;gap:14px;font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 14px;flex-wrap:wrap}
+.stats b{color:var(--accent);font-size:18px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;max-width:920px}
+button,select{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;transition:.15s}
+button:hover,select:hover{border-color:var(--accent);color:var(--accent)}
+button.primary{background:var(--accent);color:#0b2b00;border-color:var(--accent);font-weight:600}
+button.blue{background:var(--accent2);color:#04121f;border-color:var(--accent2);font-weight:600}
+button.warn{background:var(--accent3);color:#231400;border-color:var(--accent3);font-weight:600}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:14px;max-width:920px;width:100%}
+.panel h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.qcard{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:20px;max-width:920px;width:100%;margin-bottom:14px}
+.qtype{font-size:13px;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.qtext{font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.5}
+.qsub{font-size:15px;color:var(--muted);margin-bottom:14px}
+.audio-btn{background:var(--accent2);color:#04121f;border:none;border-radius:50%;width:64px;height:64px;font-size:28px;cursor:pointer;margin-bottom:14px;transition:.15s}
+.audio-btn:hover{filter:brightness(1.1);transform:scale(1.05)}
+.choices{display:grid;gap:10px;margin-top:10px}
+.choice{background:#0b1220;border:2px solid var(--line);border-radius:12px;padding:14px 18px;font-size:17px;cursor:pointer;transition:.15s;text-align:left}
+.choice:hover{border-color:var(--accent2);background:rgba(28,176,246,.1)}
+.choice.correct{border-color:var(--accent);background:rgba(88,204,2,.2);animation:pop .3s}
+.choice.wrong{border-color:var(--err);background:rgba(255,75,75,.2);animation:shake .3s}
+.choice.disabled{pointer-events:none;opacity:.7}
+.feedback{border-radius:12px;padding:16px 20px;margin-top:14px;display:none}
+.feedback.show{display:block;animation:slideIn .3s}
+.feedback.good{background:rgba(88,204,2,.15);border:2px solid var(--accent)}
+.feedback.bad{background:rgba(255,75,75,.15);border:2px solid var(--err)}
+.fb-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.feedback.good .fb-title{color:var(--accent)}
+.feedback.bad .fb-title{color:var(--err)}
+.fb-body{font-size:15px;line-height:1.8;color:var(--text)}
+.fb-body .grammar{background:#0b1220;border-left:4px solid var(--accent3);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px;font-size:14px}
+.fb-body .grammar b{color:var(--accent3)}
+.fb-body .example{color:var(--muted);font-size:14px;margin-top:6px}
+.mic-btn{background:var(--err);color:#fff;border:none;border-radius:50%;width:80px;height:80px;font-size:36px;cursor:pointer;margin:10px 0;transition:.15s}
+.mic-btn:hover{filter:brightness(1.1);transform:scale(1.05)}
+.mic-btn.recording{animation:pulse 1s infinite;background:#ff1c1c}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,75,75,.6)}70%{box-shadow:0 0 0 20px rgba(255,75,75,0)}100%{box-shadow:0 0 0 0 rgba(255,75,75,0)}}
+.score-ring{width:120px;height:120px;border-radius:50%;border:8px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;margin:10px auto}
+.lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.lesson{background:#0b1220;border:2px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;text-align:center}
+.lesson:hover{border-color:var(--accent);transform:translateY(-3px)}
+.lesson .icon{font-size:36px;margin-bottom:6px}
+.lesson .name{font-weight:700;font-size:16px;margin-bottom:4px}
+.lesson .desc{font-size:13px;color:var(--muted)}
+.lesson.locked{opacity:.5;pointer-events:none}
+.lesson.done{border-color:var(--accent);background:rgba(88,204,2,.1)}
+.status{font-size:14px;min-height:20px}
+.status.good{color:var(--accent);font-weight:700}
+.status.bad{color:var(--err)}
+footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
+.progress{height:10px;background:#0b1220;border-radius:5px;overflow:hidden;margin-bottom:14px}
+.progress .bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s;border-radius:5px}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Nihongo Master <span>· 日英学习</span></h1>
+    <div class="sub">单词 · 听力 · 口语 · 语法详解 · 多邻国式闯关</div>
+  </div>
+  <div class="stats">
+    <div>连续 <b id="streak">0</b>🔥</div>
+    <div>经验 <b id="xp">0</b></div>
+    <div>正确率 <b id="acc">0%</b></div>
+    <div>总题 <b id="total">0</b></div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="primary" id="homeBtn">🏠 课程首页</button>
+  <button class="blue" id="vocabBtn">📚 单词练习</button>
+  <button class="warn" id="listenBtn">🎧 听力练习</button>
+  <button id="speakBtn">🎤 口语练习</button>
+  <button id="grammarBtn">📖 语法详解</button>
+  <button id="reviewBtn">🔁 错题本</button>
+</div>
+
+<div class="panel">
+  <div class="progress"><div class="bar" id="progBar" style="width:0%"></div></div>
+  <div class="status" id="status">选择课程或练习模式开始学习</div>
+</div>
+
+<div id="content"></div>
+
+<footer>本地运行 · 语音识别依赖浏览器 API（Chrome/Edge 支持日语） · 数据不上传</footer>
+
+<script>
+const LESSONS=[
+{id:'greeting',icon:'👋',name:'问候',desc:'はじめまして',locked:false,
+ vocab:[
+  {ja:'こんにちは',romaji:'konnichiwa',en:'Hello',pos:'phrase',grammar:'日语问候语，白天使用。「こんにちは」直译为"今天"，省略了"你好吗"。',example:'こんにちは、元気ですか。(Hello, how are you?)'},
+  {ja:'ありがとう',romaji:'arigatou',en:'Thank you',pos:'phrase',grammar:'非正式感谢。正式场合用「ありがとうございます」。',example:'ありがとうございます！(Thank you very much!)'},
+  {ja:'さようなら',romaji:'sayounara',en:'Goodbye',pos:'phrase',grammar:'较正式的告别，暗示长时间不见。朋友间常用「じゃあね」。',example:'さようなら、また明日。(Goodbye, see you tomorrow.)'},
+  {ja:'おはよう',romaji:'ohayou',en:'Good morning',pos:'phrase',grammar:'非正式说法，对上级要用「おはようございます」。',example:'おはよう、今日も頑張ろう！(Good morning, let us do our best today!)'},
+  {ja:'はい',romaji:'hai',en:'Yes',pos:'adverb',grammar:'肯定应答词，也可表示"我在听"。',example:'はい、分かりました。(Yes, I understand.)'},
+  {ja:'いいえ',romaji:'iie',en:'No',pos:'adverb',grammar:'否定应答词，语气比「ううん」正式。',example:'いいえ、違います。(No, that is wrong.)'}
+ ],
+ listen:[
+  {say:'こんにちは',answer:'Hello',wrong:['Goodbye','Thank you','Good morning'],grammar:'「こんにちは」是白天通用的问候语，对应英文 Hello。'},
+  {say:'ありがとう',answer:'Thank you',wrong:['Please','Excuse me','I am sorry'],grammar:'「ありがとう」= Thank you，正式场合加「ございます」。'},
+  {say:'おはようございます',answer:'Good morning',wrong:['Good night','Good afternoon','Good evening'],grammar:'「おはようございます」是礼貌的早安，比「おはよう」更正式。'},
+  {say:'さようなら',answer:'Goodbye',wrong:['Hello','Welcome','See you later'],grammar:'「さようなら」较正式，日常多用「じゃあね」。'},
+  {say:'はい、分かりました',answer:'Yes, I understand',wrong:['No, I do not','Thank you','Excuse me'],grammar:'「分かりました」是「分かる」的过去式，表示"我明白了"。'}
+ ],
+ speak:[
+  {ja:'こんにちは',romaji:'konnichiwa',en:'Hello',hint:'说出"你好"'},
+  {ja:'ありがとう',romaji:'arigatou',en:'Thank you',hint:'说出"谢谢"'},
+  {ja:'おはようございます',romaji:'ohayou gozaimasu',en:'Good morning',hint:'礼貌早安'},
+  {ja:'すみません',romaji:'sumimasen',en:'Excuse me',hint:'打扰/抱歉'}
+ ],
+ grammar:[
+  {title:'日语问候语的时段',rule:'早安=おはよう(ご)、白天=こんにちは、晚上=こんばんは。对上级需加「ございます」。',example:'おはようございます vs おはよう'},
+  {title:'「は」主题助词',rule:'「は」读作wa，标记句子主题，如「私は学生です」(I am a student)。',example:'私は日本人です。(I am Japanese.)'}
+ ]},
+{id:'self',icon:'🙋',name:'自我介绍',desc:'わたしの名前は…',locked:false,
+ vocab:[
+  {ja:'わたし',romaji:'watashi',en:'I / me',pos:'pronoun',grammar:'第一人称代词，正式场合使用。男性口语常用「ぼく」或「おれ」。',example:'わたしは学生です。(I am a student.)'},
+  {ja:'なまえ',romaji:'namae',en:'name',pos:'noun',grammar:'「名前」意为名字，询问用「お名前は？」。',example:'お名前は？(What is your name?)'},
+  {ja:'がくせい',romaji:'gakusei',en:'student',pos:'noun',grammar:'「学生」，「がく」+「せい」。',example:'わたしはがくせいです。(I am a student.)'},
+  {ja:'しごと',romaji:'shigoto',en:'work / job',pos:'noun',grammar:'「仕事」意为工作、职业。',example:'なにをしていますか？(What do you do?)'},
+  {ja:'にほん',romaji:'nihon',en:'Japan',pos:'noun',grammar:'「日本」读作にほん，也可读にっぽん。',example:'にほんじんです。(I am Japanese.)'},
+  {ja:'です',romaji:'desu',en:'is / am / are',pos:'copula',grammar:'日语系词，表示"是"，接在名词后。',example:'わたしはがくせいです。(I am a student.)'}
+ ],
+ listen:[
+  {say:'わたしはがくせいです',answer:'I am a student',wrong:['I am a teacher','I am Japanese','I am working'],grammar:'「は」标记主题，「です」= is/am/are。'},
+  {say:'おなまえは？',answer:'What is your name?',wrong:['How old are you?','Where are you from?','What do you do?'],grammar:'「お名前は？」省略了「何ですか」，是礼貌问名。'},
+  {say:'にほんじんです',answer:'I am Japanese',wrong:['I am Chinese','I am a student','I like Japan'],grammar:'「にほん」+「じん」(人)=日本人。'},
+  {say:'しごとをしています',answer:'I am working',wrong:['I am eating','I am a student','I am studying'],grammar:'「〜をしています」表示从事某工作。'}
+ ],
+ speak:[
+  {ja:'わたしはがくせいです',romaji:'watashi wa gakusei desu',en:'I am a student',hint:'介绍学生身份'},
+  {ja:'おなまえは？',romaji:'onamae wa',en:'What is your name?',hint:'询问名字'},
+  {ja:'にほんじんです',romaji:'nihonjin desu',en:'I am Japanese',hint:'介绍国籍'},
+  {ja:'ちゅうごくじんです',romaji:'chuugokujin desu',en:'I am Chinese',hint:'介绍国籍'}
+ ],
+ grammar:[
+  {title:'「は」vs「が」',rule:'「は」标记已知主题，「が」标记新信息/主语。如「わたしは学生です」用は强调"我"。',example:'わたしは学生です vs 学生がいます'},
+  {title:'です的用法',rule:'「です」是礼貌系词，接名词后表示"是"，否定用「ではありません」。',example:'わたしは先生ではありません。(I am not a teacher.)'}
+ ]},
+{id:'number',icon:'🔢',name:'数字与时间',desc:'いち、に、さん…',locked:false,
+ vocab:[
+  {ja:'いち',romaji:'ichi',en:'one',pos:'number',grammar:'数字1，「一つ」(ひとつ)用于计数物体。',example:'いち、に、さん (one, two, three)'},
+  {ja:'に',romaji:'ni',en:'two',pos:'number',grammar:'数字2，也是时间助词"在…"。',example:'にがつ (February)'},
+  {ja:'さん',romaji:'san',en:'three / Mr.',pos:'number',grammar:'数字3，也可作人名敬称后缀。',example:'田中さん (Mr. Tanaka)'},
+  {ja:'よる',romaji:'yoru',en:'night',pos:'noun',grammar:'「夜」晚上，反义「あさ」(早晨)。',example:'こんばんは、よるです。(Good evening, it is night.)'},
+  {ja:'ひる',romaji:'hiru',en:'noon / daytime',pos:'noun',grammar:'「昼」白天、中午。',example:'ひるごはん (lunch)'},
+  {ja:'あさ',romaji:'asa',en:'morning',pos:'noun',grammar:'「朝」早晨，与「よる」相对。',example:'あさ、おはよう。(Morning, good morning.)'}
+ ],
+ listen:[
+  {say:'いち、に、さん',answer:'one, two, three',wrong:['two, three, four','one, two, four','three, four, five'],grammar:'日语数字发音：いち=1、に=2、さん=3。'},
+  {say:'よる',answer:'night',wrong:['morning','noon','evening'],grammar:'「よる」= night，对应英文 night。'},
+  {say:'ひる',answer:'noon',wrong:['night','morning','midnight'],grammar:'「ひる」= noon/daytime。'},
+  {say:'あさ',answer:'morning',wrong:['evening','afternoon','night'],grammar:'「あさ」= morning，与「よる」相对。'}
+ ],
+ speak:[
+  {ja:'いち、に、さん',romaji:'ichi, ni, san',en:'one, two, three',hint:'数数 1-3'},
+  {ja:'いちじ',romaji:'ichiji',en:'one o clock',hint:'说时间'},
+  {ja:'よるです',romaji:'yoru desu',en:'It is night',hint:'描述时间'},
+  {ja:'あさです',romaji:'asa desu',en:'It is morning',hint:'描述时间'}
+ ],
+ grammar:[
+  {title:'时间助词「に」',rule:'具体时间点后加「に」表示"在…"，如「いちじに」(at one o\'clock)。',example:'いちじにねむります。(I sleep at 1 o\'clock.)'},
+  {title:'数字计数法',rule:'日语有专门计数词尾，如「一つ、二つ、三つ」，需单独记忆。',example:'りんごをみっつ食べました。(I ate three apples.)'}
+ ]},
+{id:'food',icon:'🍜',name:'餐饮',desc:'これは何ですか',locked:true,
+ vocab:[
+  {ja:'たべもの',romaji:'tabemono',en:'food',pos:'noun',grammar:'「食べ物」=食物，「〜もの」表示物。',example:'なにが好きですか？(What food do you like?)'},
+  {ja:'のみもの',romaji:'nomimono',en:'drink',pos:'noun',grammar:'「飲み物」=饮料，「のむ」是喝。',example:'みずをのみます。(I drink water.)'},
+  {ja:'みず',romaji:'mizu',en:'water',pos:'noun',grammar:'「水」=水，是基础名词。',example:'みずをください。(Water, please.)'},
+  {ja:'ごはん',romaji:'gohan',en:'rice / meal',pos:'noun',grammar:'「御飯」既指米饭也指一餐饭。',example:'ごはんを食べましょう。(Let us eat.)'},
+  {ja:'おいしい',romaji:'oishii',en:'delicious',pos:'i-adj',grammar:'い形容词，直接接名词，否定「おいしくない」。',example:'このラーメンはおいしい。(This ramen is delicious.)'},
+  {ja:'すし',romaji:'sushi',en:'sushi',pos:'noun',grammar:'「寿司」日本代表性食物。',example:'すしが大好きです。(I love sushi.)'}
+ ],
+ listen:[
+  {say:'これは何ですか',answer:'What is this?',wrong:['What is that?','How much is it?','Where is it?'],grammar:'「これ」= this，「何ですか」= what is。'},
+  {say:'おいしいです',answer:'It is delicious',wrong:['It is bad','It is expensive','It is big'],grammar:'「おいしい」= delicious，い形容词直接加です。'},
+  {say:'みずをください',answer:'Water, please',wrong:['Give me food','I want rice','Where is water?'],grammar:'「〜をください」= Please give me ~。'},
+  {say:'すしが大好きです',answer:'I love sushi',wrong:['I like sushi a little','I hate sushi','I eat sushi'],grammar:'「〜が大好きです」= I love ~。'}
+ ],
+ speak:[
+  {ja:'おいしいです',romaji:'oishii desu',en:'It is delicious',hint:'夸赞好吃'},
+  {ja:'みずをください',romaji:'mizu wo kudasai',en:'Water, please',hint:'点水'},
+  {ja:'すしが大好きです',romaji:'sushi ga daisuki desu',en:'I love sushi',hint:'表达喜好'},
+  {ja:'これをください',romaji:'kore wo kudasai',en:'This one, please',hint:'点单'}
+ ],
+ grammar:[
+  {title:'い形容词',rule:'以い结尾的形容词，否定去い加くない，如「おいしくない」。',example:'おいしくない (not delicious)'},
+  {title:'「を」宾语助词',rule:'「を」标记动作对象，如「みずをのむ」(drink water)。',example:'ごはんを食べます。(I eat rice.)'}
+ ]},
+{id:'travel',icon:'✈️',name:'旅行交通',desc:'どこへ行きますか',locked:true,
+ vocab:[
+  {ja:'でんしゃ',romaji:'densha',en:'train',pos:'noun',grammar:'「電車」=电车，日本主要交通工具。',example:'でんしゃでいきます。(I go by train.)'},
+  {ja:'くうこう',romaji:'kuukou',en:'airport',pos:'noun',grammar:'「空港」=机场。',example:'くうこうへいきます。(I go to the airport.)'},
+  {ja:'ホテル',romaji:'hoteru',en:'hotel',pos:'noun',grammar:'外来语hotel的音译。',example:'ホテルにとまります。(I stay at a hotel.)'},
+  {ja:'きっぷ',romaji:'kippu',en:'ticket',pos:'noun',grammar:'「切符」=车票、门票。',example:'きっぷをかいます。(I buy a ticket.)'},
+  {ja:'いきます',romaji:'ikimasu',en:'go',pos:'verb',grammar:'「行く」的ます形，表示去。',example:'とうきょうへいきます。(I go to Tokyo.)'},
+  {ja:'きます',romaji:'kimasu',en:'come',pos:'verb',grammar:'「来る」的ます形，表示来。',example:'ここへきてください。(Please come here.)'}
+ ],
+ listen:[
+  {say:'でんしゃでいきます',answer:'I go by train',wrong:['I go by bus','I go by plane','I walk'],grammar:'「で」表示交通手段，「でんしゃで」= by train。'},
+  {say:'きっぷをかいました',answer:'I bought a ticket',wrong:['I ate a ticket','I sold a ticket','I lost a ticket'],grammar:'「かいました」是「かう」的过去式。'},
+  {say:'ホテルにとまります',answer:'I stay at a hotel',wrong:['I eat at a hotel','I go to a hotel','I buy a hotel'],grammar:'「にとまります」= stay at。'},
+  {say:'くうこうへいきます',answer:'I go to the airport',wrong:['I come from the airport','I work at the airport','I live at the airport'],grammar:'「へ」表示方向，「くうこうへ」= to the airport。'}
+ ],
+ speak:[
+  {ja:'でんしゃでいきます',romaji:'densha de ikimasu',en:'I go by train',hint:'说交通方式'},
+  {ja:'きっぷをください',romaji:'kippu wo kudasai',en:'Ticket, please',hint:'买票'},
+  {ja:'どこですか',romaji:'doko desu ka',en:'Where is it?',hint:'问地点'},
+  {ja:'ホテルへいきます',romaji:'hoteru he ikimasu',en:'I go to the hotel',hint:'说行程'}
+ ],
+ grammar:[
+  {title:'方向助词「へ」',rule:'「へ」读作e，表示移动方向，接地点后。',example:'とうきょうへいきます。(I go to Tokyo.)'},
+  {title:'交通手段「で」',rule:'「で」表示交通工具，如「でんしゃで」(by train)、バスで(by bus)。',example:'ひこうきでいきます。(I go by plane.)'}
+ ]},
+{id:'shopping',icon:'🛒',name:'购物',desc:'いくらですか',locked:true,
+ vocab:[
+  {ja:'いくら',romaji:'ikura',en:'how much',pos:'adverb',grammar:'「いくら」=多少钱，询问价格。',example:'これはいくらですか？(How much is this?)'},
+  {ja:'たかい',romaji:'takai',en:'expensive / tall',pos:'i-adj',grammar:'い形容词，既可指贵也可指高。',example:'このかばんはたかい。(This bag is expensive.)'},
+  {ja:'やすい',romaji:'yasui',en:'cheap',pos:'i-adj',grammar:'「安い」=便宜，反义「たかい」。',example:'これはやすいです。(This is cheap.)'},
+  {ja:'かばん',romaji:'kaban',en:'bag',pos:'noun',grammar:'「鞄」=包、手提包。',example:'かばんをかいます。(I buy a bag.)'},
+  {ja:'ふたつ',romaji:'futatsu',en:'two (counting)',pos:'counter',grammar:'「二つ」计数两个，用于无量词名词。',example:'りんごをふたつください。(Two apples, please.)'},
+  {ja:'カード',romaji:'kaado',en:'card',pos:'noun',grammar:'外来语card，指信用卡等。',example:'カードでかいます。(I pay by card.)'}
+ ],
+ listen:[
+  {say:'これはいくらですか',answer:'How much is this?',wrong:['What is this?','Where is this?','Who is this?'],grammar:'「いくらですか」= How much is it?'},
+  {say:'これはやすいです',answer:'This is cheap',wrong:['This is expensive','This is big','This is small'],grammar:'「やすい」= cheap，反义「たかい」。'},
+  {say:'カードでかいます',answer:'I pay by card',wrong:['I pay by cash','I buy a card','I lose my card'],grammar:'「で」表示支付手段。'},
+  {say:'ふたつください',answer:'Two, please',wrong:['One, please','Three, please','Ten, please'],grammar:'「ふたつ」= two (counting form)。'}
+ ],
+ speak:[
+  {ja:'いくらですか',romaji:'ikura desu ka',en:'How much is it?',hint:'问价格'},
+  {ja:'これをください',romaji:'kore wo kudasai',en:'This one, please',hint:'要这个'},
+  {ja:'たかすぎます',romaji:'takasugimasu',en:'Too expensive',hint:'嫌贵'},
+  {ja:'カードでいきます',romaji:'kaado de ikimasu',en:'I pay by card',hint:'付款方式'}
+ ],
+ grammar:[
+  {title:'数量词+ください',rule:'名词+数量+ください表示"请给我几个"，如「ふたつください」。',example:'みっつください。(Please give me three.)'},
+  {title:'〜すぎます',rule:'「〜すぎます」= too ~，表示过度，接形容词词干。',example:'たかすぎます。(It is too expensive.)'}
+ ]},
+{id:'daily',icon:'⏰',name:'日常活动',desc:'毎日何をしますか',locked:true,
+ vocab:[
+  {ja:'おきます',romaji:'okimasu',en:'wake up',pos:'verb',grammar:'「起きる」的ます形，起床。',example:'ななくじにおきます。(I wake up at 6.)'},
+  {ja:'ねます',romaji:'nemasu',en:'sleep',pos:'verb',grammar:'「寝る」的ます形，睡觉。',example:'じゅうににねます。(I sleep at 12.)'},
+  {ja:'はたらきます',romaji:'hatarakimasu',en:'work',pos:'verb',grammar:'「働く」的ます形，工作。',example:'会社ではたらきます。(I work at a company.)'},
+  {ja:'べんきょうします',romaji:'benkyou shimasu',en:'study',pos:'verb',grammar:'「勉強する」=学习，する动词。',example:'にほんごをべんきょうします。(I study Japanese.)'},
+  {ja:'あそびます',romaji:'asobimasu',en:'play',pos:'verb',grammar:'「遊ぶ」的ます形，玩耍。',example:'ともだちとあそびます。(I play with friends.)'},
+  {ja:'かいものします',romaji:'kaimono shimasu',en:'go shopping',pos:'verb',grammar:'「買い物する」=购物。',example:'かいものをします。(I go shopping.)'}
+ ],
+ listen:[
+  {say:'ななくじにおきます',answer:'I wake up at 6',wrong:['I sleep at 6','I work at 6','I eat at 6'],grammar:'「に」标记具体时间点。'},
+  {say:'にほんごをべんきょうします',answer:'I study Japanese',wrong:['I study English','I speak Japanese','I write Japanese'],grammar:'「〜を勉強します」= study ~。'},
+  {say:'ともだちとあそびます',answer:'I play with friends',wrong:['I work with friends','I eat with friends','I sleep with friends'],grammar:'「と」= with，表示伴随。'},
+  {say:'かいものをします',answer:'I go shopping',wrong:['I buy food','I sell things','I work'],grammar:'「買い物する」= go shopping。'}
+ ],
+ speak:[
+  {ja:'おきます',romaji:'okimasu',en:'I wake up',hint:'起床'},
+  {ja:'ねます',romaji:'nemasu',en:'I sleep',hint:'睡觉'},
+  {ja:'べんきょうします',romaji:'benkyou shimasu',en:'I study',hint:'学习'},
+  {ja:'かいものをします',romaji:'kaimono shimasu',en:'I go shopping',hint:'购物'}
+ ],
+ grammar:[
+  {title:'ます形',rule:'动词ます形用于礼貌表达，ます前是连用形，否定用「ません」。',example:'たべません (do not eat)'},
+  {title:'伴随助词「と」',rule:'「と」= with，标记一起动作的人。',example:'かぞくとべんきょうします。(I study with family.)'}
+ ]},
+{id:'feel',icon:'😊',name:'感情表达',desc:'気分はどうですか',locked:true,
+ vocab:[
+  {ja:'うれしい',romaji:'ureshii',en:'happy',pos:'i-adj',grammar:'い形容词，高兴。否定「うれしくない」。',example:'とてもうれしいです。(I am very happy.)'},
+  {ja:'かなしい',romaji:'kanashii',en:'sad',pos:'i-adj',grammar:'い形容词，悲伤。',example:'かなしいです。(I am sad.)'},
+  {ja:'つかれた',romaji:'tsukareta',en:'tired',pos:'i-adj',grammar:'「疲れた」过去式，表示累了。',example:'つかれました。(I got tired.)'},
+  {ja:'げんき',romaji:'genki',en:'energetic / fine',pos:'na-adj',grammar:'「元気」形容人有精神。',example:'げんきですか？(How are you?)'},
+  {ja:'だいすき',romaji:'daisuki',en:'love / like very much',pos:'na-adj',grammar:'「大好き」=非常喜欢。',example:'にほんごがだいすきです。(I love Japanese.)'},
+  {ja:'いらいらします',romaji:'iraira shimasu',en:'get irritated',pos:'verb',grammar:'拟态词+する，表示烦躁。',example:'こどもがいらいらします。(The child irritates me.)'}
+ ],
+ listen:[
+  {say:'とてもうれしいです',answer:'I am very happy',wrong:['I am very sad','I am very tired','I am very angry'],grammar:'「とても」= very，「うれしい」= happy。'},
+  {say:'げんきですか',answer:'How are you?',wrong:['Where are you?','Who are you?','What are you?'],grammar:'「げんきですか」= Are you fine?'},
+  {say:'つかれました',answer:'I got tired',wrong:['I got happy','I got angry','I got sad'],grammar:'「疲れました」是「疲れる」的过去式。'},
+  {say:'にほんごがだいすきです',answer:'I love Japanese',wrong:['I hate Japanese','I like English','I study Japanese'],grammar:'「〜が大好きです」= I love ~。'}
+ ],
+ speak:[
+  {ja:'うれしいです',romaji:'ureshii desu',en:'I am happy',hint:'表达开心'},
+  {ja:'げんきです',romaji:'genki desu',en:'I am fine',hint:'回答近况'},
+  {ja:'つかれました',romaji:'tsukaremashita',en:'I am tired',hint:'表达疲惫'},
+  {ja:'だいすきです',romaji:'daisuki desu',en:'I love it',hint:'表达喜爱'}
+ ],
+ grammar:[
+  {title:'い形容词变否定',rule:'去い+くない表示否定，如「うれしくない」(not happy)。',example:'うれしくない (not happy)'},
+  {title:'〜が好きです',rule:'喜欢的对象用「が」提示，不用「を」。',example:'すしがすきです。(I like sushi.)'}
+ ]}
+];
+let state={xp:0,streak:0,correct:0,total:0,done:{},wrongBook:[],view:'home',lesson:null,step:0,queue:[]};
+function save(){localStorage.setItem('nihongo_state',JSON.stringify(state));}
+function load(){const s=localStorage.getItem('nihongo_state');if(s){state=Object.assign(state,JSON.parse(s));}}
+function updateHeader(){document.getElementById('streak').textContent=state.streak;document.getElementById('xp').textContent=state.xp;document.getElementById('acc').textContent=state.total?Math.round(state.correct/state.total*100)+'%':'0%';document.getElementById('total').textContent=state.total;}
+function setStatus(t,cls){const s=document.getElementById('status');s.textContent=t;s.className='status'+(cls?' '+cls:'');}
+function setProg(p){document.getElementById('progBar').style.width=p+'%';}
+function speak(text,lang='ja-JP'){if(!('speechSynthesis' in window)){return;}const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=0.85;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function showHome(){
+  state.view='home';save();updateHeader();setProg(0);setStatus('选择课程或练习模式开始学习','');
+  const c=document.getElementById('content');
+  let html='<div class="panel"><h3>课程（闯关解锁）</h3><div class="lessons">';
+  LESSONS.forEach((L,i)=>{
+    const unlocked=i===0||state.done[LESSONS[i-1].id]||!L.locked;
+    const done=state.done[L.id];
+    html+=`<div class="lesson ${done?'done':''} ${unlocked?'':'locked'}" data-id="${L.id}"><div class="icon">${L.icon}</div><div class="name">${L.name}</div><div class="desc">${L.desc}</div>${done?'<div style="color:var(--accent);font-weight:700;margin-top:6px">✓ 已完成</div>':unlocked?'':'<div style="color:var(--muted);margin-top:6px">🔒 未解锁</div>'}</div>`;
+  });
+  html+='</div></div>';
+  html+='<div class="panel"><h3>快速练习</h3><div class="lessons"><div class="lesson" data-act="vocab"><div class="icon">📚</div><div class="name">单词</div><div class="desc">随机词汇测验</div></div><div class="lesson" data-act="listen"><div class="icon">🎧</div><div class="name">听力</div><div class="desc">听日语选英文</div></div><div class="lesson" data-act="speak"><div class="icon">🎤</div><div class="name">口语</div><div class="desc">语音识别跟读</div></div><div class="lesson" data-act="wrong"><div class="icon">🔁</div><div class="name">错题本</div><div class="desc">'+state.wrongBook.length+' 题待复习</div></div></div></div>';
+  c.innerHTML=html;
+  c.querySelectorAll('.lesson').forEach(el=>{el.onclick=()=>{const id=el.dataset.id,act=el.dataset.act;if(act==='vocab'){startPractice('vocab');return;}if(act==='listen'){startPractice('listen');return;}if(act==='speak'){startPractice('speak');return;}if(act==='wrong'){startWrong();return;}if(id)startLesson(id);};});
+}
+function startLesson(id){const L=LESSONS.find(x=>x.id===id);if(!L)return;state.lesson=L;state.step=0;const q=[];L.vocab.slice(0,4).forEach(v=>q.push({type:'vocab',data:v}));L.listen.slice(0,4).forEach(v=>q.push({type:'listen',data:v}));L.speak.slice(0,3).forEach(v=>q.push({type:'speak',data:v}));state.queue=q;renderQ();}
+function startPractice(type){let pool;if(type==='vocab')pool=LESSONS.flatMap(L=>L.vocab);else if(type==='listen')pool=LESSONS.flatMap(L=>L.listen);else pool=LESSONS.flatMap(L=>L.speak);const shuffled=pool.sort(()=>Math.random()-0.5).slice(0,6);state.lesson=null;state.queue=shuffled.map(d=>({type,data:d}));state.step=0;renderQ();}
+function startWrong(){if(!state.wrongBook.length){setStatus('错题本为空，太棒了！','good');showHome();return;}state.lesson=null;state.queue=state.wrongBook.slice(0,8).map(w=>({type:w.type,data:w.data}));state.step=0;renderQ();}
+function renderQ(){updateHeader();save();if(state.step>=state.queue.length){if(state.lesson){state.done[state.lesson.id]=true;save();}setStatus('本轮完成！经验 +'+(state.step*10),'good');setProg(100);const c=document.getElementById('content');c.innerHTML=`<div class="qcard" style="text-align:center"><div class="score-ring">${Math.round(state.total?state.correct/state.total*100:100)}%</div><div style="font-size:20px;font-weight:700">本轮完成！</div><div style="color:var(--muted);margin-top:8px">经验 +${state.queue.length*10} · 连续 ${state.streak}🔥</div><button class="primary" style="margin-top:18px" onclick="showHome()">返回课程首页</button></div>`;return;}const q=state.queue[state.step];setProg(Math.round(state.step/state.queue.length*100));setStatus(`第 ${state.step+1}/${state.queue.length} 题 · ${q.type==='vocab'?'单词':q.type==='listen'?'听力':'口语'}`,'');const c=document.getElementById('content');if(q.type==='vocab')renderVocab(q.data);else if(q.type==='listen')renderListen(q.data);else renderSpeak(q.data);}
+function renderVocab(v){const c=document.getElementById('content');const pool=LESSONS.flatMap(L=>L.vocab).filter(x=>x.en!==v.en);const wrong=[...pool].sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.en);const choices=[v.en,...wrong].sort(()=>Math.random()-0.5);c.innerHTML=`<div class="qcard"><div class="qtype">📚 单词 · 选择正确英文</div><div class="qtext">${v.ja}</div><div class="qsub">${v.romaji} · ${v.pos}</div><button class="audio-btn" title="朗读日语">🔊</button><div class="choices">${choices.map(ch=>`<div class="choice" data-en="${ch}">${ch}</div>`).join('')}</div><div class="feedback" id="fb"></div><button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button></div>`;c.querySelector('.audio-btn').onclick=()=>speak(v.ja,'ja-JP');c.querySelectorAll('.choice').forEach(el=>{el.onclick=()=>{const ok=el.dataset.en===v.en;c.querySelectorAll('.choice').forEach(x=>{x.classList.add('disabled');if(x.dataset.en===v.en)x.classList.add('correct');});if(!ok)el.classList.add('wrong');grade(ok,{type:'vocab',data:v},`正确答案：<b>${v.en}</b>`,v.grammar,v.example);};});document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};}
+function renderListen(v){const c=document.getElementById('content');const choices=[v.answer,...v.wrong].sort(()=>Math.random()-0.5);c.innerHTML=`<div class="qcard"><div class="qtype">🎧 听力 · 听日语选英文意思</div><button class="audio-btn" id="playBtn">🔊</button><div class="qsub">点击播放日语发音（可重复听）</div><div class="choices">${choices.map(ch=>`<div class="choice" data-en="${ch}">${ch}</div>`).join('')}</div><div class="feedback" id="fb"></div><button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button></div>`;const play=()=>speak(v.say,'ja-JP');c.querySelector('#playBtn').onclick=play;setTimeout(play,300);c.querySelectorAll('.choice').forEach(el=>{el.onclick=()=>{const ok=el.dataset.en===v.answer;c.querySelectorAll('.choice').forEach(x=>{x.classList.add('disabled');if(x.dataset.en===v.answer)x.classList.add('correct');});if(!ok)el.classList.add('wrong');grade(ok,{type:'listen',data:v},`正确答案：<b>${v.answer}</b>`,v.grammar,`原句：${v.say}`);};});document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};}
+function renderSpeak(v){
+  const c=document.getElementById('content');
+  const supported=('webkitSpeechRecognition' in window)||('SpeechRecognition' in window);
+  const disabledAttr = supported ? '' : 'disabled';
+  const titleAttr = supported ? '点击开始录音' : '当前浏览器不支持语音识别';
+  const statusText = supported ? '点击麦克风开始朗读（日语识别）' : '此浏览器不支持语音识别，可点击看提示跳过';
+  const html =
+    '<div class="qcard">' +
+    '<div class="qtype">🎤 口语 · 大声读出日语句子</div>' +
+    '<div class="qtext">'+v.ja+'</div>' +
+    '<div class="qsub">'+v.romaji+' — '+v.en+' · '+v.hint+'</div>' +
+    '<button class="audio-btn" id="listenBtn">🔊 先听一遍</button>' +
+    '<div style="margin-top:10px"><button class="mic-btn" id="micBtn" '+disabledAttr+' title="'+titleAttr+'">🎤</button>' +
+    '<div class="qsub" id="micStatus">'+statusText+'</div></div>' +
+    '<div class="input-row" id="hintRow" style="display:none"><div style="flex:1;color:var(--muted);font-size:14px">提示：'+v.romaji+' · '+v.en+'</div><button class="blue" id="skipBtn">看提示，继续</button></div>' +
+    '<div class="feedback" id="fb"></div>' +
+    '<button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button>' +
+    '</div>';
+  c.innerHTML = html;
+  document.getElementById('listenBtn').onclick=()=>speak(v.ja,'ja-JP');
+  const micBtn=document.getElementById('micBtn');
+  const fb=document.getElementById('fb');
+  const showHint=()=>{document.getElementById('hintRow').style.display='flex';};
+  document.getElementById('skipBtn').onclick=()=>{
+    grade(false,{type:'speak',data:v},'已跳过（看提示）','口语需要多练习，点击🔊反复跟读，注意音拍节奏。','正确读法：'+v.ja+' ('+v.romaji+')');
+  };
+  if(supported){
+    micBtn.onclick=()=>{
+      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      const rec=new SR(); rec.lang='ja-JP'; rec.interimResults=false; rec.maxAlternatives=5;
+      micBtn.classList.add('recording');
+      document.getElementById('micStatus').textContent='正在聆听…请朗读日语';
+      rec.onresult=(e)=>{
+        const alts=Array.prototype.slice.call(e.results[0]).map(r=>r.transcript.toLowerCase().replace(/\s+/g,''));
+        const target=v.ja.toLowerCase().replace(/\s+/g,'');
+        const romaji=v.romaji.toLowerCase().replace(/\s+/g,'');
+        const matched=alts.some(a=>a.includes(target)||a.includes(romaji)||target.includes(a)||levenshtein(a,target)<3);
+        micBtn.classList.remove('recording');
+        document.getElementById('micStatus').textContent='识别结果：'+e.results[0][0].transcript;
+        grade(matched,{type:'speak',data:v},matched?'发音相似度良好！':'发音与原文有差异',matched?'继续保持！注意日语的清音与浊音区别。':'日语是音节语言，每个假名一拍，注意长音与促音。建议点击🔊反复跟读。','正确读法：'+v.ja+' ('+v.romaji+')');
+      };
+      rec.onerror=()=>{micBtn.classList.remove('recording');document.getElementById('micStatus').textContent='识别失败，请重试或点击看提示';showHint();};
+      rec.onend=()=>{micBtn.classList.remove('recording');if(!fb.classList.contains('show'))showHint();};
+      rec.start();
+    };
+  } else {
+    showHint();
+  }
+  document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};
+}
+function levenshtein(a,b){const m=a.length,n=b.length;const dp=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);for(let j=0;j<=n;j++)dp[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return dp[m][n];}
+function grade(ok,q,correctMsg,grammar,example){state.total++;if(ok){state.correct++;state.streak++;state.xp+=10;}else{state.streak=0;if(!state.wrongBook.some(w=>w.data===q.data))state.wrongBook.push(q);}save();updateHeader();const fb=document.getElementById('fb');fb.className='feedback show '+(ok?'good':'bad');fb.innerHTML=`<div class="fb-title">${ok?'✅ 正确！+10 XP':'❌ 错误 · 语法详解'}</div><div class="fb-body"><div>${correctMsg}</div><div class="grammar"><b>📖 语法/词汇详解：</b><br>${grammar}</div>${example?`<div class="example">例句：${example}</div>`:''}${!ok?'<div class="example" style="color:var(--accent3)">已加入错题本，可在「错题本」中复习。</div>':''}</div>`;document.getElementById('nextBtn').style.display='inline-block';}
+document.getElementById('homeBtn').onclick=showHome;
+document.getElementById('vocabBtn').onclick=()=>startPractice('vocab');
+document.getElementById('listenBtn').onclick=()=>startPractice('listen');
+document.getElementById('speakBtn').onclick=()=>startPractice('speak');
+document.getElementById('grammarBtn').onclick=()=>{const c=document.getElementById('content');let html='<div class="panel"><h3>📖 语法详解汇总</h3>';LESSONS.forEach(L=>{html+=`<div style="margin-bottom:14px"><div style="font-weight:700;color:var(--accent);margin-bottom:6px">${L.icon} ${L.name}</div>`;L.grammar.forEach(g=>{html+=`<div style="background:#0b1220;border-left:4px solid var(--accent3);padding:10px 14px;border-radius:0 8px 8px 0;margin:6px 0;font-size:14px"><b>${g.title}</b><br>${g.rule}<div style="color:var(--muted);margin-top:4px">例：${g.example}</div></div>`;});html+='</div>';});html+='</div>';c.innerHTML=html;setStatus('语法详解汇总','');setProg(0);};
+document.getElementById('reviewBtn').onclick=startWrong;
+load();showHome();updateHeader();
+</script>
+</body>
+</html>
