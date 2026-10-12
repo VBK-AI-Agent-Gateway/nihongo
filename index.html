@@ -8,23 +8,27 @@
 :root{--bg:#0f172a;--panel:#1e293b;--line:#334155;--accent:#58cc02;--accent2:#1cb0f6;--accent3:#ff9600;--text:#e2e8f0;--muted:#94a3b8;--err:#ff4b4b;--gold:#ffc800}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Segoe UI",system-ui,-apple-system,"Hiragino Sans","Microsoft YaHei",sans-serif;background:radial-gradient(1200px 600px at 70% -10%,#1d3a5f 0%,var(--bg) 60%);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 10px 40px}
-header{width:100%;max-width:920px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+header{width:100%;max-width:960px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
 h1{font-size:26px;letter-spacing:2px}
 h1 span{color:var(--accent)}
 .sub{color:var(--muted);font-size:13px;margin-top:4px}
 .stats{display:flex;gap:14px;font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 14px;flex-wrap:wrap}
 .stats b{color:var(--accent);font-size:18px}
-.toolbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;max-width:920px}
+.langswitch{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:5px}
+.langswitch button{border:none;background:transparent;padding:8px 18px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;color:var(--muted);transition:.15s}
+.langswitch button.on{background:var(--accent);color:#0b2b00}
+.langswitch button:hover:not(.on){color:var(--accent2)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;max-width:960px}
 button,select{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;transition:.15s}
 button:hover,select:hover{border-color:var(--accent);color:var(--accent)}
 button.primary{background:var(--accent);color:#0b2b00;border-color:var(--accent);font-weight:600}
 button.blue{background:var(--accent2);color:#04121f;border-color:var(--accent2);font-weight:600}
 button.warn{background:var(--accent3);color:#231400;border-color:var(--accent3);font-weight:600}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:14px;max-width:920px;width:100%}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:14px;max-width:960px;width:100%}
 .panel h3{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-.qcard{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:20px;max-width:920px;width:100%;margin-bottom:14px}
+.qcard{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:20px;max-width:960px;width:100%;margin-bottom:14px}
 .qtype{font-size:13px;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.qtext{font-size:22px;font-weight:700;margin-bottom:6px;line-height:1.5}
+.qtext{font-size:24px;font-weight:700;margin-bottom:6px;line-height:1.5}
 .qsub{font-size:15px;color:var(--muted);margin-bottom:14px}
 .audio-btn{background:var(--accent2);color:#04121f;border:none;border-radius:50%;width:64px;height:64px;font-size:28px;cursor:pointer;margin-bottom:14px;transition:.15s}
 .audio-btn:hover{filter:brightness(1.1);transform:scale(1.05)}
@@ -64,6 +68,14 @@ button.warn{background:var(--accent3);color:#231400;border-color:var(--accent3);
 footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
 .progress{height:10px;background:#0b1220;border-radius:5px;overflow:hidden;margin-bottom:14px}
 .progress .bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s;border-radius:5px}
+.grammar-card{background:#0b1220;border-left:4px solid var(--accent3);padding:12px 16px;border-radius:0 8px 8px 0;margin:8px 0;font-size:14px;line-height:1.7}
+.grammar-card b{color:var(--accent3);font-size:15px}
+.grammar-card .ex{color:var(--muted);margin-top:5px;font-size:13px}
+.vocab-table{width:100%;border-collapse:collapse;font-size:15px}
+.vocab-table th,.vocab-table td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left}
+.vocab-table th{color:var(--accent2);font-size:13px;text-transform:uppercase;letter-spacing:1px}
+.vocab-table td.term{font-weight:700;font-size:17px}
+.vocab-table td.romaji{color:var(--muted);font-style:italic}
 @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
@@ -74,6 +86,10 @@ footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
   <div>
     <h1>Nihongo Master <span>· 日英学习</span></h1>
     <div class="sub">单词 · 听力 · 口语 · 语法详解 · 多邻国式闯关</div>
+  </div>
+  <div class="langswitch" id="langSwitch">
+    <button data-lang="ja" class="on">🇯🇵 日语课程</button>
+    <button data-lang="en">🇺🇸 英语课程</button>
   </div>
   <div class="stats">
     <div>连续 <b id="streak">0</b>🔥</div>
@@ -99,10 +115,11 @@ footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
 
 <div id="content"></div>
 
-<footer>本地运行 · 语音识别依赖浏览器 API（Chrome/Edge 支持日语） · 数据不上传</footer>
+<footer>本地运行 · 语音识别依赖浏览器 API（Chrome/Edge 支持日语与英语） · 数据不上传</footer>
 
 <script>
-const LESSONS=[
+// ===== 日语课程 =====
+const JA_LESSONS=[
 {id:'greeting',icon:'👋',name:'问候',desc:'はじめまして',locked:false,
  vocab:[
   {ja:'こんにちは',romaji:'konnichiwa',en:'Hello',pos:'phrase',grammar:'日语问候语，白天使用。「こんにちは」直译为"今天"，省略了"你好吗"。',example:'こんにちは、元気ですか。(Hello, how are you?)'},
@@ -110,24 +127,29 @@ const LESSONS=[
   {ja:'さようなら',romaji:'sayounara',en:'Goodbye',pos:'phrase',grammar:'较正式的告别，暗示长时间不见。朋友间常用「じゃあね」。',example:'さようなら、また明日。(Goodbye, see you tomorrow.)'},
   {ja:'おはよう',romaji:'ohayou',en:'Good morning',pos:'phrase',grammar:'非正式说法，对上级要用「おはようございます」。',example:'おはよう、今日も頑張ろう！(Good morning, let us do our best today!)'},
   {ja:'はい',romaji:'hai',en:'Yes',pos:'adverb',grammar:'肯定应答词，也可表示"我在听"。',example:'はい、分かりました。(Yes, I understand.)'},
-  {ja:'いいえ',romaji:'iie',en:'No',pos:'adverb',grammar:'否定应答词，语气比「ううん」正式。',example:'いいえ、違います。(No, that is wrong.)'}
+  {ja:'いいえ',romaji:'iie',en:'No',pos:'adverb',grammar:'否定应答词，语气比「ううん」正式。',example:'いいえ、違います。(No, that is wrong.)'},
+  {ja:'すみません',romaji:'sumimasen',en:'Excuse me / Sorry',pos:'phrase',grammar:'万能道歉/搭话用语，餐厅呼叫服务员也用它。',example:'すみません、トイレはどこですか？(Excuse me, where is the restroom?)'},
+  {ja:'はじめまして',romaji:'hajimemashite',en:'Nice to meet you',pos:'phrase',grammar:'初次见面专用，后接「よろしくお願いします」。',example:'はじめまして、よろしくお願いします。(Nice to meet you, please take care of me.)'}
  ],
  listen:[
   {say:'こんにちは',answer:'Hello',wrong:['Goodbye','Thank you','Good morning'],grammar:'「こんにちは」是白天通用的问候语，对应英文 Hello。'},
   {say:'ありがとう',answer:'Thank you',wrong:['Please','Excuse me','I am sorry'],grammar:'「ありがとう」= Thank you，正式场合加「ございます」。'},
   {say:'おはようございます',answer:'Good morning',wrong:['Good night','Good afternoon','Good evening'],grammar:'「おはようございます」是礼貌的早安，比「おはよう」更正式。'},
   {say:'さようなら',answer:'Goodbye',wrong:['Hello','Welcome','See you later'],grammar:'「さようなら」较正式，日常多用「じゃあね」。'},
-  {say:'はい、分かりました',answer:'Yes, I understand',wrong:['No, I do not','Thank you','Excuse me'],grammar:'「分かりました」是「分かる」的过去式，表示"我明白了"。'}
+  {say:'はい、分かりました',answer:'Yes, I understand',wrong:['No, I do not','Thank you','Excuse me'],grammar:'「分かりました」是「分かる」的过去式，表示"我明白了"。'},
+  {say:'はじめまして',answer:'Nice to meet you',wrong:['How are you?','Good night','I am sorry'],grammar:'「はじめまして」初次见面的寒暄语。'}
  ],
  speak:[
   {ja:'こんにちは',romaji:'konnichiwa',en:'Hello',hint:'说出"你好"'},
   {ja:'ありがとう',romaji:'arigatou',en:'Thank you',hint:'说出"谢谢"'},
   {ja:'おはようございます',romaji:'ohayou gozaimasu',en:'Good morning',hint:'礼貌早安'},
-  {ja:'すみません',romaji:'sumimasen',en:'Excuse me',hint:'打扰/抱歉'}
+  {ja:'すみません',romaji:'sumimasen',en:'Excuse me',hint:'打扰/抱歉'},
+  {ja:'はじめまして',romaji:'hajimemashite',en:'Nice to meet you',hint:'初次见面'}
  ],
  grammar:[
   {title:'日语问候语的时段',rule:'早安=おはよう(ご)、白天=こんにちは、晚上=こんばんは。对上级需加「ございます」。',example:'おはようございます vs おはよう'},
-  {title:'「は」主题助词',rule:'「は」读作wa，标记句子主题，如「私は学生です」(I am a student)。',example:'私は日本人です。(I am Japanese.)'}
+  {title:'「は」主题助词',rule:'「は」读作wa，标记句子主题，如「私は学生です」(I am a student)。',example:'私は日本人です。(I am Japanese.)'},
+  {title:'敬语后缀「です」',rule:'「です」是名词谓语的礼貌形式，否定用「ではありません」。',example:'学生です → 学生ではありません'}
  ]},
 {id:'self',icon:'🙋',name:'自我介绍',desc:'わたしの名前は…',locked:false,
  vocab:[
@@ -136,13 +158,16 @@ const LESSONS=[
   {ja:'がくせい',romaji:'gakusei',en:'student',pos:'noun',grammar:'「学生」，「がく」+「せい」。',example:'わたしはがくせいです。(I am a student.)'},
   {ja:'しごと',romaji:'shigoto',en:'work / job',pos:'noun',grammar:'「仕事」意为工作、职业。',example:'なにをしていますか？(What do you do?)'},
   {ja:'にほん',romaji:'nihon',en:'Japan',pos:'noun',grammar:'「日本」读作にほん，也可读にっぽん。',example:'にほんじんです。(I am Japanese.)'},
-  {ja:'です',romaji:'desu',en:'is / am / are',pos:'copula',grammar:'日语系词，表示"是"，接在名词后。',example:'わたしはがくせいです。(I am a student.)'}
+  {ja:'です',romaji:'desu',en:'is / am / are',pos:'copula',grammar:'日语系词，表示"是"，接在名词后。',example:'わたしはがくせいです。(I am a student.)'},
+  {ja:'ともだち',romaji:'tomodachi',en:'friend',pos:'noun',grammar:'「友達」朋友，复数用「みんな」。',example:'ともだちがいます。(I have a friends.)'},
+  {ja:'せんせい',romaji:'sensei',en:'teacher',pos:'noun',grammar:'「先生」既指老师也用于医生、作家等尊称。',example:'せんせいはがくせいを教えます。(The teacher teaches students.)'}
  ],
  listen:[
   {say:'わたしはがくせいです',answer:'I am a student',wrong:['I am a teacher','I am Japanese','I am working'],grammar:'「は」标记主题，「です」= is/am/are。'},
   {say:'おなまえは？',answer:'What is your name?',wrong:['How old are you?','Where are you from?','What do you do?'],grammar:'「お名前は？」省略了「何ですか」，是礼貌问名。'},
   {say:'にほんじんです',answer:'I am Japanese',wrong:['I am Chinese','I am a student','I like Japan'],grammar:'「にほん」+「じん」(人)=日本人。'},
-  {say:'しごとをしています',answer:'I am working',wrong:['I am eating','I am a student','I am studying'],grammar:'「〜をしています」表示从事某工作。'}
+  {say:'しごとをしています',answer:'I am working',wrong:['I am eating','I am a student','I am studying'],grammar:'「〜をしています」表示从事某工作。'},
+  {say:'ともだちがいます',answer:'I have a friend',wrong:['I have a teacher','I like a friend','I meet a friend'],grammar:'「〜がいます」表示存在（有生命）。'}
  ],
  speak:[
   {ja:'わたしはがくせいです',romaji:'watashi wa gakusei desu',en:'I am a student',hint:'介绍学生身份'},
@@ -152,7 +177,8 @@ const LESSONS=[
  ],
  grammar:[
   {title:'「は」vs「が」',rule:'「は」标记已知主题，「が」标记新信息/主语。如「わたしは学生です」用は强调"我"。',example:'わたしは学生です vs 学生がいます'},
-  {title:'です的用法',rule:'「です」是礼貌系词，接名词后表示"是"，否定用「ではありません」。',example:'わたしは先生ではありません。(I am not a teacher.)'}
+  {title:'です的用法',rule:'「です」是礼貌系词，接名词后表示"是"，否定用「ではありません」。',example:'わたしは先生ではありません。(I am not a teacher.)'},
+  {title:'存在动词「います/あります」',rule:'有生命用「います」，无生命用「あります」。',example:'猫がいます。(There is a cat.)'}
  ]},
 {id:'number',icon:'🔢',name:'数字与时间',desc:'いち、に、さん…',locked:false,
  vocab:[
@@ -161,13 +187,16 @@ const LESSONS=[
   {ja:'さん',romaji:'san',en:'three / Mr.',pos:'number',grammar:'数字3，也可作人名敬称后缀。',example:'田中さん (Mr. Tanaka)'},
   {ja:'よる',romaji:'yoru',en:'night',pos:'noun',grammar:'「夜」晚上，反义「あさ」(早晨)。',example:'こんばんは、よるです。(Good evening, it is night.)'},
   {ja:'ひる',romaji:'hiru',en:'noon / daytime',pos:'noun',grammar:'「昼」白天、中午。',example:'ひるごはん (lunch)'},
-  {ja:'あさ',romaji:'asa',en:'morning',pos:'noun',grammar:'「朝」早晨，与「よる」相对。',example:'あさ、おはよう。(Morning, good morning.)'}
+  {ja:'あさ',romaji:'asa',en:'morning',pos:'noun',grammar:'「朝」早晨，与「よる」相对。',example:'あさ、おはよう。(Morning, good morning.)'},
+  {ja:'じ',romaji:'ji',en:'o\'clock',pos:'noun',grammar:'「時」表示几点，读作じ(じ)。',example:'さんじ (three o\'clock)'},
+  {ja:'ふん',romaji:'fun',en:'minutes',pos:'noun',grammar:'「分」分钟，发音有音变(さんぷん)。',example:'ごふん (five minutes)'}
  ],
  listen:[
   {say:'いち、に、さん',answer:'one, two, three',wrong:['two, three, four','one, two, four','three, four, five'],grammar:'日语数字发音：いち=1、に=2、さん=3。'},
   {say:'よる',answer:'night',wrong:['morning','noon','evening'],grammar:'「よる」= night，对应英文 night。'},
   {say:'ひる',answer:'noon',wrong:['night','morning','midnight'],grammar:'「ひる」= noon/daytime。'},
-  {say:'あさ',answer:'morning',wrong:['evening','afternoon','night'],grammar:'「あさ」= morning，与「よる」相对。'}
+  {say:'あさ',answer:'morning',wrong:['evening','afternoon','night'],grammar:'「あさ」= morning，与「よる」相对。'},
+  {say:'さんじ',answer:'three o\'clock',wrong:['three minutes','three days','three months'],grammar:'「さんじ」= 3点整，「に」时刻助词常省略。'}
  ],
  speak:[
   {ja:'いち、に、さん',romaji:'ichi, ni, san',en:'one, two, three',hint:'数数 1-3'},
@@ -177,7 +206,8 @@ const LESSONS=[
  ],
  grammar:[
   {title:'时间助词「に」',rule:'具体时间点后加「に」表示"在…"，如「いちじに」(at one o\'clock)。',example:'いちじにねむります。(I sleep at 1 o\'clock.)'},
-  {title:'数字计数法',rule:'日语有专门计数词尾，如「一つ、二つ、三つ」，需单独记忆。',example:'りんごをみっつ食べました。(I ate three apples.)'}
+  {title:'数字计数法',rule:'日语有专门计数词尾，如「一つ、二つ、三つ」，需单独记忆。',example:'りんごをみっつ食べました。(I ate three apples.)'},
+  {title:'时刻表达',rule:'「～時(じ)」几点，「～分(ふん/ぷん)」几分，注意音变。',example:'さんじさんぷん (3:03)'}
  ]},
 {id:'food',icon:'🍜',name:'餐饮',desc:'これは何ですか',locked:true,
  vocab:[
@@ -186,13 +216,16 @@ const LESSONS=[
   {ja:'みず',romaji:'mizu',en:'water',pos:'noun',grammar:'「水」=水，是基础名词。',example:'みずをください。(Water, please.)'},
   {ja:'ごはん',romaji:'gohan',en:'rice / meal',pos:'noun',grammar:'「御飯」既指米饭也指一餐饭。',example:'ごはんを食べましょう。(Let us eat.)'},
   {ja:'おいしい',romaji:'oishii',en:'delicious',pos:'i-adj',grammar:'い形容词，直接接名词，否定「おいしくない」。',example:'このラーメンはおいしい。(This ramen is delicious.)'},
-  {ja:'すし',romaji:'sushi',en:'sushi',pos:'noun',grammar:'「寿司」日本代表性食物。',example:'すしが大好きです。(I love sushi.)'}
+  {ja:'すし',romaji:'sushi',en:'sushi',pos:'noun',grammar:'「寿司」日本代表性食物。',example:'すしが大好きです。(I love sushi.)'},
+  {ja:'ラーメン',romaji:'raamen',en:'ramen',pos:'noun',grammar:'外来语，源自中文"拉面"。',example:'ラーメンを食べました。(I ate ramen.)'},
+  {ja:'おちゃ',romaji:'ocha',en:'tea',pos:'noun',grammar:'「お茶」日式茶，绿茶居多。',example:'おちゃをのみます。(I drink tea.)'}
  ],
  listen:[
   {say:'これは何ですか',answer:'What is this?',wrong:['What is that?','How much is it?','Where is it?'],grammar:'「これ」= this，「何ですか」= what is。'},
   {say:'おいしいです',answer:'It is delicious',wrong:['It is bad','It is expensive','It is big'],grammar:'「おいしい」= delicious，い形容词直接加です。'},
   {say:'みずをください',answer:'Water, please',wrong:['Give me food','I want rice','Where is water?'],grammar:'「〜をください」= Please give me ~。'},
-  {say:'すしが大好きです',answer:'I love sushi',wrong:['I like sushi a little','I hate sushi','I eat sushi'],grammar:'「〜が大好きです」= I love ~。'}
+  {say:'すしが大好きです',answer:'I love sushi',wrong:['I like sushi a little','I hate sushi','I eat sushi'],grammar:'「〜が大好きです」= I love ~。'},
+  {say:'おちゃをのみます',answer:'I drink tea',wrong:['I eat tea','I make tea','I like tea'],grammar:'「のみます」= drink，「を」标记宾语。'}
  ],
  speak:[
   {ja:'おいしいです',romaji:'oishii desu',en:'It is delicious',hint:'夸赞好吃'},
@@ -202,7 +235,8 @@ const LESSONS=[
  ],
  grammar:[
   {title:'い形容词',rule:'以い结尾的形容词，否定去い加くない，如「おいしくない」。',example:'おいしくない (not delicious)'},
-  {title:'「を」宾语助词',rule:'「を」标记动作对象，如「みずをのむ」(drink water)。',example:'ごはんを食べます。(I eat rice.)'}
+  {title:'「を」宾语助词',rule:'「を」标记动作对象，如「みずをのむ」(drink water)。',example:'ごはんを食べます。(I eat rice.)'},
+  {title:'「ください」请求',rule:'名词+を+ください = Please give me ~，点餐万能句型。',example:'これをください。(This one, please.)'}
  ]},
 {id:'travel',icon:'✈️',name:'旅行交通',desc:'どこへ行きますか',locked:true,
  vocab:[
@@ -211,13 +245,16 @@ const LESSONS=[
   {ja:'ホテル',romaji:'hoteru',en:'hotel',pos:'noun',grammar:'外来语hotel的音译。',example:'ホテルにとまります。(I stay at a hotel.)'},
   {ja:'きっぷ',romaji:'kippu',en:'ticket',pos:'noun',grammar:'「切符」=车票、门票。',example:'きっぷをかいます。(I buy a ticket.)'},
   {ja:'いきます',romaji:'ikimasu',en:'go',pos:'verb',grammar:'「行く」的ます形，表示去。',example:'とうきょうへいきます。(I go to Tokyo.)'},
-  {ja:'きます',romaji:'kimasu',en:'come',pos:'verb',grammar:'「来る」的ます形，表示来。',example:'ここへきてください。(Please come here.)'}
+  {ja:'きます',romaji:'kimasu',en:'come',pos:'verb',grammar:'「来る」的ます形，表示来。',example:'ここへきてください。(Please come here.)'},
+  {ja:'でんしゃ',romaji:'densha',en:'train',pos:'noun',grammar:'重复词已修正，见上方条目。',example:''},
+  {ja:'ちかてつ',romaji:'chikatetsu',en:'subway',pos:'noun',grammar:'「地下鉄」=地铁。',example:'ちかてつでいきます。(I go by subway.)'}
  ],
  listen:[
   {say:'でんしゃでいきます',answer:'I go by train',wrong:['I go by bus','I go by plane','I walk'],grammar:'「で」表示交通手段，「でんしゃで」= by train。'},
   {say:'きっぷをかいました',answer:'I bought a ticket',wrong:['I ate a ticket','I sold a ticket','I lost a ticket'],grammar:'「かいました」是「かう」的过去式。'},
   {say:'ホテルにとまります',answer:'I stay at a hotel',wrong:['I eat at a hotel','I go to a hotel','I buy a hotel'],grammar:'「にとまります」= stay at。'},
-  {say:'くうこうへいきます',answer:'I go to the airport',wrong:['I come from the airport','I work at the airport','I live at the airport'],grammar:'「へ」表示方向，「くうこうへ」= to the airport。'}
+  {say:'くうこうへいきます',answer:'I go to the airport',wrong:['I come from the airport','I work at the airport','I live at the airport'],grammar:'「へ」表示方向，「くうこうへ」= to the airport。'},
+  {say:'ちかてつでいきます',answer:'I go by subway',wrong:['I go by taxi','I go by bus','I walk'],grammar:'「ちかてつで」= by subway。'}
  ],
  speak:[
   {ja:'でんしゃでいきます',romaji:'densha de ikimasu',en:'I go by train',hint:'说交通方式'},
@@ -227,7 +264,8 @@ const LESSONS=[
  ],
  grammar:[
   {title:'方向助词「へ」',rule:'「へ」读作e，表示移动方向，接地点后。',example:'とうきょうへいきます。(I go to Tokyo.)'},
-  {title:'交通手段「で」',rule:'「で」表示交通工具，如「でんしゃで」(by train)、バスで(by bus)。',example:'ひこうきでいきます。(I go by plane.)'}
+  {title:'交通手段「で」',rule:'「で」表示交通工具，如「でんしゃで」(by train)、バスで(by bus)。',example:'ひこうきでいきます。(I go by plane.)'},
+  {title:'移动动词「いきます/きます」',rule:'「いきます」去，「きます」来，均用「へ/に」标记方向。',example:'学校へいきます。(I go to school.)'}
  ]},
 {id:'shopping',icon:'🛒',name:'购物',desc:'いくらですか',locked:true,
  vocab:[
@@ -236,13 +274,16 @@ const LESSONS=[
   {ja:'やすい',romaji:'yasui',en:'cheap',pos:'i-adj',grammar:'「安い」=便宜，反义「たかい」。',example:'これはやすいです。(This is cheap.)'},
   {ja:'かばん',romaji:'kaban',en:'bag',pos:'noun',grammar:'「鞄」=包、手提包。',example:'かばんをかいます。(I buy a bag.)'},
   {ja:'ふたつ',romaji:'futatsu',en:'two (counting)',pos:'counter',grammar:'「二つ」计数两个，用于无量词名词。',example:'りんごをふたつください。(Two apples, please.)'},
-  {ja:'カード',romaji:'kaado',en:'card',pos:'noun',grammar:'外来语card，指信用卡等。',example:'カードでかいます。(I pay by card.)'}
+  {ja:'カード',romaji:'kaado',en:'card',pos:'noun',grammar:'外来语card，指信用卡等。',example:'カードでかいます。(I pay by card.)'},
+  {ja:'ねだん',romaji:'nedan',en:'price',pos:'noun',grammar:'「値段」=价格、价钱。',example:'ねだんはいくらですか？(What is the price?)'},
+  {ja:'おおきい',romaji:'ookii',en:'big',pos:'i-adj',grammar:'い形容词"大"，反义「ちいさい」。',example:'おおきいかばんです。(It is a big bag.)'}
  ],
  listen:[
   {say:'これはいくらですか',answer:'How much is this?',wrong:['What is this?','Where is this?','Who is this?'],grammar:'「いくらですか」= How much is it?'},
   {say:'これはやすいです',answer:'This is cheap',wrong:['This is expensive','This is big','This is small'],grammar:'「やすい」= cheap，反义「たかい」。'},
   {say:'カードでかいます',answer:'I pay by card',wrong:['I pay by cash','I buy a card','I lose my card'],grammar:'「で」表示支付手段。'},
-  {say:'ふたつください',answer:'Two, please',wrong:['One, please','Three, please','Ten, please'],grammar:'「ふたつ」= two (counting form)。'}
+  {say:'ふたつください',answer:'Two, please',wrong:['One, please','Three, please','Ten, please'],grammar:'「ふたつ」= two (counting form)。'},
+  {say:'たかすぎます',answer:'It is too expensive',wrong:['It is cheap','It is big','It is small'],grammar:'「〜すぎます」= too ~。'}
  ],
  speak:[
   {ja:'いくらですか',romaji:'ikura desu ka',en:'How much is it?',hint:'问价格'},
@@ -252,7 +293,8 @@ const LESSONS=[
  ],
  grammar:[
   {title:'数量词+ください',rule:'名词+数量+ください表示"请给我几个"，如「ふたつください」。',example:'みっつください。(Please give me three.)'},
-  {title:'〜すぎます',rule:'「〜すぎます」= too ~，表示过度，接形容词词干。',example:'たかすぎます。(It is too expensive.)'}
+  {title:'〜すぎます',rule:'「〜すぎます」= too ~，表示过度，接形容词词干。',example:'たかすぎます。(It is too expensive.)'},
+  {title:'对比形容词',rule:'「たかい」贵/高 vs 「やすい」便宜，「おおきい」大 vs 「ちいさい」小。',example:'これはたかいです。(This is expensive.)'}
  ]},
 {id:'daily',icon:'⏰',name:'日常活动',desc:'毎日何をしますか',locked:true,
  vocab:[
@@ -261,13 +303,16 @@ const LESSONS=[
   {ja:'はたらきます',romaji:'hatarakimasu',en:'work',pos:'verb',grammar:'「働く」的ます形，工作。',example:'会社ではたらきます。(I work at a company.)'},
   {ja:'べんきょうします',romaji:'benkyou shimasu',en:'study',pos:'verb',grammar:'「勉強する」=学习，する动词。',example:'にほんごをべんきょうします。(I study Japanese.)'},
   {ja:'あそびます',romaji:'asobimasu',en:'play',pos:'verb',grammar:'「遊ぶ」的ます形，玩耍。',example:'ともだちとあそびます。(I play with friends.)'},
-  {ja:'かいものします',romaji:'kaimono shimasu',en:'go shopping',pos:'verb',grammar:'「買い物する」=购物。',example:'かいものをします。(I go shopping.)'}
+  {ja:'かいものします',romaji:'kaimono shimasu',en:'go shopping',pos:'verb',grammar:'「買い物する」=购物。',example:'かいものをします。(I go shopping.)'},
+  {ja:'のみます',romaji:'nomimasu',en:'drink',pos:'verb',grammar:'「飲む」的ます形，喝。',example:'おちゃをのみます。(I drink tea.)'},
+  {ja:'みます',romaji:'mimasu',en:'watch / see',pos:'verb',grammar:'「見る」的ます形，看、观看。',example:'テレビをみます。(I watch TV.)'}
  ],
  listen:[
   {say:'ななくじにおきます',answer:'I wake up at 6',wrong:['I sleep at 6','I work at 6','I eat at 6'],grammar:'「に」标记具体时间点。'},
   {say:'にほんごをべんきょうします',answer:'I study Japanese',wrong:['I study English','I speak Japanese','I write Japanese'],grammar:'「〜を勉強します」= study ~。'},
   {say:'ともだちとあそびます',answer:'I play with friends',wrong:['I work with friends','I eat with friends','I sleep with friends'],grammar:'「と」= with，表示伴随。'},
-  {say:'かいものをします',answer:'I go shopping',wrong:['I buy food','I sell things','I work'],grammar:'「買い物する」= go shopping。'}
+  {say:'かいものをします',answer:'I go shopping',wrong:['I buy food','I sell things','I work'],grammar:'「買い物する」= go shopping。'},
+  {say:'テレビをみます',answer:'I watch TV',wrong:['I listen to TV','I read TV','I make TV'],grammar:'「みます」= watch/see。'}
  ],
  speak:[
   {ja:'おきます',romaji:'okimasu',en:'I wake up',hint:'起床'},
@@ -277,7 +322,8 @@ const LESSONS=[
  ],
  grammar:[
   {title:'ます形',rule:'动词ます形用于礼貌表达，ます前是连用形，否定用「ません」。',example:'たべません (do not eat)'},
-  {title:'伴随助词「と」',rule:'「と」= with，标记一起动作的人。',example:'かぞくとべんきょうします。(I study with family.)'}
+  {title:'伴随助词「と」',rule:'「と」= with，标记一起动作的人。',example:'かぞくとべんきょうします。(I study with family.)'},
+  {title:'する动词',rule:'「勉強する/買い物する」等名词+する构成动词。',example:'べんきょうします (I study)'}
  ]},
 {id:'feel',icon:'😊',name:'感情表达',desc:'気分はどうですか',locked:true,
  vocab:[
@@ -286,13 +332,16 @@ const LESSONS=[
   {ja:'つかれた',romaji:'tsukareta',en:'tired',pos:'i-adj',grammar:'「疲れた」过去式，表示累了。',example:'つかれました。(I got tired.)'},
   {ja:'げんき',romaji:'genki',en:'energetic / fine',pos:'na-adj',grammar:'「元気」形容人有精神。',example:'げんきですか？(How are you?)'},
   {ja:'だいすき',romaji:'daisuki',en:'love / like very much',pos:'na-adj',grammar:'「大好き」=非常喜欢。',example:'にほんごがだいすきです。(I love Japanese.)'},
-  {ja:'いらいらします',romaji:'iraira shimasu',en:'get irritated',pos:'verb',grammar:'拟态词+する，表示烦躁。',example:'こどもがいらいらします。(The child irritates me.)'}
+  {ja:'いらいらします',romaji:'iraira shimasu',en:'get irritated',pos:'verb',grammar:'拟态词+する，表示烦躁。',example:'こどもがいらいらします。(The child irritates me.)'},
+  {ja:'たのしい',romaji:'tanoshii',en:'fun',pos:'i-adj',grammar:'い形容词"愉快、有趣"。',example:'たのしいかいぎでした。(It was a fun meeting.)'},
+  {ja:'こわい',romaji:'kowai',en:'scary',pos:'i-adj',grammar:'い形容词"可怕"。',example:'こわいおばけです。(It is a scary ghost.)'}
  ],
  listen:[
   {say:'とてもうれしいです',answer:'I am very happy',wrong:['I am very sad','I am very tired','I am very angry'],grammar:'「とても」= very，「うれしい」= happy。'},
   {say:'げんきですか',answer:'How are you?',wrong:['Where are you?','Who are you?','What are you?'],grammar:'「げんきですか」= Are you fine?'},
   {say:'つかれました',answer:'I got tired',wrong:['I got happy','I got angry','I got sad'],grammar:'「疲れました」是「疲れる」的过去式。'},
-  {say:'にほんごがだいすきです',answer:'I love Japanese',wrong:['I hate Japanese','I like English','I study Japanese'],grammar:'「〜が大好きです」= I love ~。'}
+  {say:'にほんごがだいすきです',answer:'I love Japanese',wrong:['I hate Japanese','I like English','I study Japanese'],grammar:'「〜が大好きです」= I love ~。'},
+  {say:'たのしかったです',answer:'It was fun',wrong:['It was boring','It was scary','It was sad'],grammar:'「たのしかった」= was fun（过去式）。'}
  ],
  speak:[
   {ja:'うれしいです',romaji:'ureshii desu',en:'I am happy',hint:'表达开心'},
@@ -302,45 +351,321 @@ const LESSONS=[
  ],
  grammar:[
   {title:'い形容词变否定',rule:'去い+くない表示否定，如「うれしくない」(not happy)。',example:'うれしくない (not happy)'},
-  {title:'〜が好きです',rule:'喜欢的对象用「が」提示，不用「を」。',example:'すしがすきです。(I like sushi.)'}
+  {title:'〜が好きです',rule:'喜欢的对象用「が」提示，不用「を」。',example:'すしがすきです。(I like sushi.)'},
+  {title:'过去式表达感受',rule:'い形容词去い+かった=过去，如「たのしかった」。',example:'たのしかったです。(It was fun.)'}
  ]}
 ];
-let state={xp:0,streak:0,correct:0,total:0,done:{},wrongBook:[],view:'home',lesson:null,step:0,queue:[]};
-function save(){localStorage.setItem('nihongo_state',JSON.stringify(state));}
-function load(){const s=localStorage.getItem('nihongo_state');if(s){state=Object.assign(state,JSON.parse(s));}}
-function updateHeader(){document.getElementById('streak').textContent=state.streak;document.getElementById('xp').textContent=state.xp;document.getElementById('acc').textContent=state.total?Math.round(state.correct/state.total*100)+'%':'0%';document.getElementById('total').textContent=state.total;}
+
+// ===== 英语课程（学习英语，讲解英文语法） =====
+const EN_LESSONS=[
+{id:'en_greet',icon:'👋',name:'Greetings',desc:'Hello / Hi there',locked:false,
+ vocab:[
+  {ja:'hello',romaji:'heh-loh',en:'你好',pos:'greeting',grammar:'最通用的问候语，几乎任何场合都适用。',example:'Hello, how are you? (你好，你好吗？)'},
+  {ja:'good morning',romaji:'gud mor-ning',en:'早安',pos:'greeting',grammar:'morning 指上午 12 点前，加 good 表示礼貌。',example:'Good morning, teacher! (早上好，老师！)'},
+  {ja:'good night',romaji:'gud nait',en:'晚安',pos:'greeting',grammar:'good night 用于告别或睡前，不是问候"晚上好"。',example:'Good night, see you tomorrow. (晚安，明天见)'},
+  {ja:'thank you',romaji:'sank yoo',en:'谢谢',pos:'phrase',grammar:'正式感谢；朋友间常说 thanks 或 thanks a lot。',example:'Thank you very much! (非常感谢！)'},
+  {ja:'excuse me',romaji:'iks-kyooz mee',en:'打扰一下',pos:'phrase',grammar:'引起注意、道歉、挤过人群都用它。',example:'Excuse me, where is the station? (请问，车站在哪？)'},
+  {ja:'please',romaji:'pleez',en:'请',pos:'adverb',grammar:'请求时加 please 更礼貌，可放句首或句尾。',example:'Water, please. = Please give me water.'},
+  {ja:'yes / no',romaji:'yes / no',en:'是 / 不',pos:'adverb',grammar:'肯定回答 yes，否定 no；口语也用 yeah/nope。',example:'Yes, I understand. (是的，我明白。)'},
+  {ja:'welcome',romaji:'wel-kum',en:'欢迎',pos:'phrase',grammar:'欢迎某人到某地，如 You are welcome = 不客气。',example:'Welcome to Beijing! (欢迎来北京！)'}
+ ],
+ listen:[
+  {say:'Hello, how are you?',answer:'你好吗？',wrong:['你叫什么名字？','你多大了？','你在哪里？'],grammar:'How are you? 是询问近况的固定寒暄，回答 Fine, thanks. 即可。'},
+  {say:'Good morning, class',answer:'同学们，早上好',wrong:['同学们，晚上好','老师好','下课了'],grammar:'class 在此指"全班同学"，morning 限定了上午时段。'},
+  {say:'Thank you so much',answer:'非常感谢你',wrong:['对不起','不客气','欢迎光临'],grammar:'so much 强化程度，= 非常/十分。'},
+  {say:'Excuse me, may I pass?',answer:'打扰一下，我可以过去吗？',wrong:['请问几点了？','你叫什么？','多少钱？'],grammar:'may I... 是礼貌请求许可的句型。'},
+  {say:'Nice to meet you',answer:'很高兴见到你',wrong:['很高兴认识你朋友','再见','好久不见'],grammar:'初次见面用 Nice to meet you，回应也用同一句。'}
+ ],
+ speak:[
+  {ja:'Hello, how are you?',romaji:'hello how r yoo',en:'你好吗？',hint:'打招呼'},
+  {ja:'Thank you very much',romaji:'thank yoo very much',en:'非常感谢',hint:'致谢'},
+  {ja:'Nice to meet you',romaji:'nice to meet yoo',en:'很高兴认识你',hint:'初次见面'},
+  {ja:'Excuse me',romaji:'iks-kyooz mee',en:'打扰一下',hint:'引起注意'}
+ ],
+ grammar:[
+  {title:'How are you? 的用法',rule:'用于寒暄问候，回答常用 I\'m fine, thank you. 或 Not bad.，不必详细描述近况。',example:'— How are you? — I\'m fine, thanks.'},
+  {title:'Please 的位置',rule:'please 可放句首、动词后或句末，句末最口语化，句首最正式。',example:'Please sit down. / Sit down, please.'},
+  {title:'Nice to meet you vs see you',rule:'初次见面用 meet，再次见面用 see。',example:'Nice to meet you. (初见) / Nice to see you. (再见)'}
+ ]},
+{id:'en_intro',icon:'🙋',name:'Self Intro',desc:'My name is…',locked:false,
+ vocab:[
+  {ja:'my name is',romaji:'my neym iz',en:'我的名字是',pos:'phrase',grammar:'自我介绍最常用句型，可缩写 I\'m。',example:'My name is Li Hua. (我叫李华。)'},
+  {ja:'I am from',romaji:'I am from',en:'我来自',pos:'phrase',grammar:'from 后接地点，表示来自哪里。',example:'I am from China. (我来自中国。)'},
+  {ja:'student',romaji:'styoo-dent',en:'学生',pos:'noun',grammar:'可数名词，复数 students，冠词 a/an 要注意。',example:'I am a student. (我是一名学生。)'},
+  {ja:'teacher',romaji:'tee-cher',en:'老师',pos:'noun',grammar:'职业名词，前用 a/an，如 a teacher。',example:'She is an English teacher.'},
+  {ja:'nice',romaji:'nays',en:'很好的',pos:'i-adj',grammar:'形容词，既可形容人也可形容物，= kind/good。',example:'You are very nice. (你人真好。)'},
+  {ja:'meet',romaji:'meet',en:'遇见',pos:'verb',grammar:'动词原形，过去式 met，注意元音变化。',example:'I meet my friend every day.'},
+  {ja:'name',romaji:'neym',en:'名字',pos:'noun',grammar:'名词"名字"，What is your name? 问名。',example:'What is your name?'},
+  {ja:'country',romaji:'kun-tree',en:'国家',pos:'noun',grammar:'名词"国家"，复数 countries，变 y 为 i 加 es。',example:'What country are you from?'}
+ ],
+ listen:[
+  {say:'My name is Tom',answer:'我叫汤姆',wrong:['我来自汤姆','汤姆是老师','我喜欢汤姆'],grammar:'My name is = 我的名字是，是自我介绍的标准开头。'},
+  {say:'I am from Japan',answer:'我来自日本',wrong:['我住日本','我喜欢日本','我去日本'],grammar:'from + 地点 = 来自，强调出身地而非居住。'},
+  {say:'I am twelve years old',answer:'我十二岁',wrong:['我十二点','我有十二个','我长到十二'],grammar:'数字+years old 表示年龄，years 复数。'},
+  {say:'I like playing basketball',answer:'我喜欢打篮球',wrong:['我讨厌篮球','我买篮球','我看篮球'],grammar:'like + doing = 喜欢做某事，动名词作宾语。'},
+  {say:'She is my sister',answer:'她是我的姐姐',wrong:['她是我的老师','她是我的朋友','她是我的女儿'],grammar:'sister = 姐妹（英语不分长幼），is = 是。'}
+ ],
+ speak:[
+  {ja:'My name is Anna',romaji:'my neym iz an-a',en:'我叫安娜',hint:'自我介绍'},
+  {ja:'I am from China',romaji:'I am from chai-na',en:'我来自中国',hint:'介绍来历'},
+  {ja:'I am a student',romaji:'I am a styoo-dent',en:'我是一名学生',hint:'介绍身份'},
+  {ja:'Nice to meet you',romaji:'nice to meet yoo',en:'很高兴认识你',hint:'初次见面'}
+ ],
+ grammar:[
+  {title:'主系表结构',rule:'英语基本句型：主语 + be动词 + 表语（名词/形容词），I am / You are / He is。',example:'I am a student. You are nice.'},
+  {title:'a / an 的选择',rule:'辅音音素开头用 a（a student），元音音素开头用 an（an apple, an hour）。',example:'I am an English teacher.'},
+  {title:'from 的用法',rule:'from 表示来源、起点，后接国家、城市、学校等。',example:'She is from Shanghai.'}
+ ]},
+{id:'en_num',icon:'🔢',name:'Numbers & Time',desc:'one, two, three…',locked:false,
+ vocab:[
+  {ja:'one hundred',romaji:'wan hun-dred',en:'一百',pos:'number',grammar:'hundred 前有具体数字时不加 s，如 two hundred。',example:'There are one hundred students.'},
+  {ja:'thousand',romaji:'thou-zand',en:'千',pos:'number',grammar:'thousand 用法同 hundred，two thousand people。',example:'Two thousand people came.'},
+  {ja:'half past',romaji:'hahf past',en:'…点半',pos:'phrase',grammar:'half past + 点数 = 几点半，也可用 o\'clock。',example:'It is half past three. (三点半)'},
+  {ja:'quarter to',romaji:'kwor-ter too',en:'…点差一刻',pos:'phrase',grammar:'quarter to = 差多少到几点，如 a quarter to five (4:45)。',example:'It is a quarter to five.'},
+  {ja:'Monday',romaji:'mun-day',en:'星期一',pos:'noun',grammar:'一周第一天（西方），缩写 Mon.，专有名词大写。',example:'I have class on Monday.'},
+  {ja:'weekend',romaji:'week-end',en:'周末',pos:'noun',grammar:'week + end，指周六周日两天，on the weekend。',example:'What do you do on weekends?'},
+  {ja:'today',romaji:'tuh-day',en:'今天',pos:'adverb',grammar:'时间副词，可作名词，= this day。',example:'Today is Monday. (今天是周一。)'},
+  {ja:'tomorrow',romaji:'tuh-mor-oh',en:'明天',pos:'adverb',grammar:'tomorrow 拼写注意双 r，作名词时前不加介词。',example:'See you tomorrow! (明天见！)'}
+ ],
+ listen:[
+  {say:'It is half past three',answer:'三点半',wrong:['三点整','三点差一刻','三点一刻'],grammar:'half past + 数字 = 几点半，past 表示"过"。'},
+  {say:'Today is Monday',answer:'今天是星期一',wrong:['今天是星期天','明天是星期一','昨天是星期一'],grammar:'today = 今天，Monday 首字母大写。'},
+  {say:'I get up at seven',answer:'我七点起床',wrong:['我七点睡觉','我七点吃饭','我七点回家'],grammar:'get up = 起床，at + 时间点，seven = 7。'},
+  {say:'The meeting is tomorrow',answer:'会议在明天',wrong:['会议在今天','会议结束了','会议取消了'],grammar:'tomorrow 前不用 in/on，直接放句末或 be 动词后。'},
+  {say:'Two hundred people came',answer:'来了两百人',wrong:['来了二十人','来了两千人','来了两个人'],grammar:'具体数字 + hundred 不加 s。'}
+ ],
+ speak:[
+  {ja:'Today is Monday',romaji:'tuh-day iz mun-day',en:'今天是星期一',hint:'说日期'},
+  {ja:'It is half past three',romaji:'it iz hahf past thrii',en:'三点半',hint:'说时间'},
+  {ja:'See you tomorrow',romaji:'see yoo tuh-mor-oh',en:'明天见',hint:'告别'},
+  {ja:'I get up at seven',romaji:'I get ap at sev-en',en:'我七点起床',hint:'作息'}
+ ],
+ grammar:[
+  {title:'时间介词 at / on / in',rule:'at + 时刻（at 7），on + 具体某天（on Monday），in + 年/月/季节（in 2024）。',example:'I get up at 7 on Monday in May.'},
+  {title:'hundred/thousand 单复数',rule:'前有具体数字时不加 s，泛指"数以百计"时加 s（hundreds of）。',example:'two hundred vs hundreds of people'},
+  {title:'星期大写规则',rule:'星期、月份、节日等专有名词首字母必须大写。',example:'Monday, January, Christmas'}
+ ]},
+{id:'en_food',icon:'🍜',name:'Food & Drink',desc:'I would like…',locked:true,
+ vocab:[
+  {ja:'I would like',romaji:'I wood lyk',en:'我想要',pos:'phrase',grammar:'would like = want 的礼貌说法，点餐必备。',example:'I would like a cup of coffee. (我想要一杯咖啡。)'},
+  {ja:'delicious',romaji:'dih-lee-shus',en:'美味的',pos:'i-adj',grammar:'比 tasty 更正式，形容食物好吃。',example:'This cake is delicious! (这蛋糕真好吃！)'},
+  {ja:'hungry',romaji:'hun-gree',en:'饿的',pos:'i-adj',grammar:'be hungry = 饿，反义 full = 饱。',example:'I am very hungry. (我很饿。)'},
+  {ja:'water',romaji:'wo-ter',en:'水',pos:'noun',grammar:'不可数名词，一杯水 a glass of water。',example:'Can I have some water? (能给我点水吗？)'},
+  {ja:'breakfast',romaji:'brek-fast',en:'早餐',pos:'noun',grammar:'三餐前不加 the，have breakfast 吃早餐。',example:'I have breakfast at 7. (我七点吃早餐。)'},
+  {ja:'vegetable',romaji:'vej-tuh-bul',en:'蔬菜',pos:'noun',grammar:'常用复数 vegetables，重音在第一音节。',example:'I eat vegetables every day.'},
+  {ja:'fruit',romaji:'froot',en:'水果',pos:'noun',grammar:'集体名词，通常不加 s，a piece of fruit。',example:'Fruit is good for you.'},
+  {ja:'bill',romaji:'bil',en:'账单',pos:'noun',grammar:'餐厅结账用 bill（英式）或 check（美式）。',example:'The bill, please. (请结账。)'}
+ ],
+ listen:[
+  {say:'I would like some tea',answer:'我想要些茶',wrong:['我想要些水','我喝茶了','我喜欢茶'],grammar:'would like = want 的礼貌形式，some 用于肯定句。'},
+  {say:'The food is delicious',answer:'食物很美味',wrong:['食物很难吃','食物很贵','食物很少'],grammar:'delicious = 美味的，is 是系动词。'},
+  {say:'I am very hungry',answer:'我很饿',wrong:['我很饱','我很渴','我很累'],grammar:'hungry = 饿，very 修饰形容词。'},
+  {say:'Can I have the bill?',answer:'可以结账吗？',wrong:['可以点菜吗？','可以加水吗？','可以换座位吗？'],grammar:'Can I have...? = 我能要…吗，请求句型。'},
+  {say:'I have breakfast at seven',answer:'我七点吃早餐',wrong:['我七点吃晚餐','我七点买早餐','我七点做早餐'],grammar:'have + 三餐 = 吃某餐，at + 时刻。'}
+ ],
+ speak:[
+  {ja:'I would like a coffee',romaji:'I wood lyk a kof-ee',en:'我想要一杯咖啡',hint:'点餐'},
+  {ja:'It is delicious',romaji:'it iz dih-lee-shus',en:'很好吃',hint:'夸赞'},
+  {ja:'The bill, please',romaji:'the bil pleez',en:'请结账',hint:'买单'},
+  {ja:'I am hungry',romaji:'I am hun-gree',en:'我饿了',hint:'表达状态'}
+ ],
+ grammar:[
+  {title:'would like 句型',rule:'would like + 名词 / would like to + 动词原形，比 want 礼貌，用于点餐、请求。',example:'I would like to order. (我想点餐。)'},
+  {title:'可数与不可数名词',rule:'water/breakfast 不可数，用 some 或量词；vegetable 可数用 a/some vegetables。',example:'some water vs two apples'},
+  {title:'have + 三餐',rule:'have breakfast/lunch/dinner 表示吃三餐，不用 eat（也可但 have 更地道）。',example:'We have dinner at 6.'}
+ ]},
+{id:'en_travel',icon:'✈️',name:'Travel',desc:'Where is…?',locked:true,
+ vocab:[
+  {ja:'boarding pass',romaji:'bor-ding pass',en:'登机牌',pos:'noun',grammar:'登机凭证，board = 上（飞机/车）。',example:'Please show your boarding pass.'},
+  {ja:'luggage',romaji:'lug-ij',en:'行李',pos:'noun',grammar:'不可数名词，一件行李 a piece of luggage。',example:'My luggage is too heavy. (我的行李太重了。)'},
+  {ja:'departure',romaji:'di-par-cher',en:'出发',pos:'noun',grammar:'反义 arrival = 到达，机场指示牌常见。',example:'Departure hall (出发大厅)'},
+  {ja:'arrive',romaji:'uh-ryv',en:'到达',pos:'verb',grammar:'arrive at + 小地点，arrive in + 大地点。',example:'We arrive in Beijing at noon.'},
+  {ja:'reservation',romaji:'rez-er-vay-shun',en:'预订',pos:'noun',grammar:'make a reservation = 预订（酒店/餐厅）。',example:'I have a reservation. (我有预订。)'},
+  {ja:'platform',romaji:'plat-form',en:'站台',pos:'noun',grammar:'火车站上车站台，英国常用。',example:'Platform 5 (5号站台)'},
+  {ja:'return ticket',romaji:'ri-turn tik-it',en:'往返票',pos:'noun',grammar:'英式说法，美式 round-trip ticket。',example:'A return ticket to London, please.'},
+  {ja:'delay',romaji:'di-ley',en:'延误',pos:'noun',verb:'动词"延误"，be delayed 被延误。',grammar:'名词/动词"延误、推迟"，航班常用。',example:'The flight is delayed. (航班延误了。)'}
+ ],
+ listen:[
+  {say:'Where is the station?',answer:'车站在哪里？',wrong:['火车什么时候开？','火车票多少钱？','火车站怎么走？'],grammar:'Where is...? = ...在哪里，询问地点。'},
+  {say:'I have a reservation',answer:'我有预订',wrong:['我有行李','我有票','我有钱'],grammar:'reservation = 预订，酒店入住常用。'},
+  {say:'The flight is delayed',answer:'航班延误了',wrong:['航班取消了','航班起飞了','航班很便宜'],grammar:'be delayed = 被延误，被动语态。'},
+  {say:'How much is a return ticket?',answer:'往返票多少钱？',wrong:['单程票多少钱？','火车几点开？','车站怎么走？'],grammar:'return ticket = 往返票，How much 问价格。'},
+  {say:'We arrive at noon',answer:'我们中午到达',wrong:['我们中午出发','我们中午吃饭','我们中午离开'],grammar:'arrive = 到达，at noon = 中午。'}
+ ],
+ speak:[
+  {ja:'Where is the station?',romaji:'wer iz thee stay-shun',en:'车站在哪里',hint:'问路'},
+  {ja:'I have a reservation',romaji:'I hav a rez-er-vay-shun',en:'我有预订',hint:'入住'},
+  {ja:'A ticket to Beijing, please',romaji:'a tik-it too bei-jing pleez',en:'一张去北京的票',hint:'买票'},
+  {ja:'The flight is delayed',romaji:'thee fleyt iz di-layd',en:'航班延误了',hint:'航班'}
+ ],
+ grammar:[
+  {title:'Where / How / What 疑问词',rule:'Where 问地点，How 问方式/程度，What 问事物，置于句首引导疑问句。',example:'Where are you going?'},
+  {title:'arrive at vs in',rule:'at 接小地点（arrive at station），in 接城市国家（arrive in Tokyo）。',example:'We arrive in Tokyo at 3.'},
+  {title:'被动语态 be + 过去分词',rule:'主语是动作承受者时用被动：is delayed（被延误）、is closed（被关闭）。',example:'The shop is closed. (商店关门了。)'}
+ ]},
+{id:'en_shop',icon:'🛒',name:'Shopping',desc:'How much is it?',locked:true,
+ vocab:[
+  {ja:'how much',romaji:'how much',en:'多少钱',pos:'phrase',grammar:'问价格固定用法，不可数名词也用 how much。',example:'How much is this shirt? (这件衬衫多少钱？)'},
+  {ja:'expensive',romaji:'iks-pen-siv',en:'昂贵的',pos:'i-adj',grammar:'反义 cheap = 便宜的，重音在 pen。',example:'This bag is too expensive. (这包太贵了。)'},
+  {ja:'discount',romaji:'dis-kownt',en:'折扣',pos:'noun',grammar:'give a discount = 打折，on sale = 特价。',example:'Is there any discount? (有折扣吗？)'},
+  {ja:'size',romaji:'syze',en:'尺码',pos:'noun',grammar:'服装尺码，What size do you wear? 你穿多大码？',example:'Do you have a larger size? (有大一号的吗？)'},
+  {ja:'cash',romaji:'kash',en:'现金',pos:'noun',grammar:'反义 card = 卡，pay in cash = 付现金。',example:'I will pay in cash. (我用现金付。)'},
+  {ja:'try on',romaji:'try on',en:'试穿',pos:'phrase',grammar:'短语动词，衣服鞋子试穿，代词放中间 try it on。',example:'Can I try this on? (我能试穿这个吗？)'},
+  {ja:'receipt',romaji:'ri-seet',en:'收据',pos:'noun',grammar:'重音在第二音节，购物凭证。',example:'Here is your receipt. (这是你的收据。)'},
+  {ja:'sale',romaji:'seyl',en:'促销/出售',pos:'noun',grammar:'on sale = 特价中；for sale = 待售。',example:'Everything is on sale today.'}
+ ],
+ listen:[
+  {say:'How much is this?',answer:'这个多少钱？',wrong:['这是什么？','这是谁的？','这是我的'],grammar:'How much + is + 单数物品，问价格。'},
+  {say:'It is too expensive',answer:'太贵了',wrong:['太便宜了','太重了','太小了'],grammar:'too = 太（贬义），expensive = 贵。'},
+  {say:'Can I try it on?',answer:'我能试穿吗？',wrong:['我能买吗？','我能退货吗？','我能看看吗？'],grammar:'try on = 试穿，代词 it 必须放中间。'},
+  {say:'Do you have a discount?',answer:'有折扣吗？',wrong:['有货吗？','有大码吗？','有现金吗？'],grammar:'discount = 折扣，Do you have...? 询问有无。'},
+  {say:'I will pay by card',answer:'我用卡支付',wrong:['我用现金支付','我退卡','我办卡'],grammar:'by + 方式 = 通过…方式，pay by card 用卡付。'}
+ ],
+ speak:[
+  {ja:'How much is this?',romaji:'how much iz this',en:'这个多少钱',hint:'问价'},
+  {ja:'It is too expensive',romaji:'it iz too ik-speen-siv',en:'太贵了',hint:'嫌贵'},
+  {ja:'Can I try it on?',romaji:'kan I try it on',en:'我能试穿吗',hint:'试穿'},
+  {ja:'I will pay by card',romaji:'I wil pay bii kard',en:'我用卡付',hint:'付款'}
+ ],
+ grammar:[
+  {title:'How much vs How many',rule:'How much 问不可数/价格，How many 问可数名词数量。',example:'How much is water? How many apples?'},
+  {title:'短语动词的代词位置',rule:'可分短语动词代词放中间：try it on、take it off，不可放末尾。',example:'Try the shoes on = Try them on.'},
+  {title:'too vs very',rule:'too = 过度（负面），very = 很（中性）。too expensive 太贵（不值），very expensive 很贵。',example:'It is very good. It is too hot.'}
+ ]},
+{id:'en_daily',icon:'⏰',name:'Daily Life',desc:'I usually…',locked:true,
+ vocab:[
+  {ja:'usually',romaji:'yoo-zhuh-lee',en:'通常',pos:'adverb',grammar:'频率副词，位于实义动词前，be 动词后。',example:'I usually get up at 7. (我通常七点起床。)'},
+  {ja:'never',romaji:'nev-er',en:'从不',pos:'adverb',grammar:'否定频率副词，句中不加 not。',example:'I never eat fast food. (我从不吃快餐。)'},
+  {ja:'sometimes',romaji:'sum-tyms',en:'有时',pos:'adverb',grammar:'可放句首、句中，位置较灵活。',example:'Sometimes I walk to school.'},
+  {ja:'exercise',romaji:'ek-ser-syz',en:'锻炼',pos:'noun/verb',grammar:'名词/动词，do exercise = 做锻炼。',example:'I exercise every morning. (我每天早上锻炼。)'},
+  {ja:'commute',romaji:'kyoo-myt',en:'通勤',pos:'verb',grammar:'上下班往返，go to work 也可。',example:'I commute by subway. (我坐地铁通勤。)'},
+  {ja:'housework',romaji:'hous-werk',en:'家务',pos:'noun',grammar:'不可数名词，do housework 做家务。',example:'I do housework on Sundays.'},
+  {ja:'relax',romaji:'ri-laks',en:'放松',pos:'verb',grammar:'动词"放松"，反义紧张 tense。',example:'I relax with music. (我听音乐放松。)'},
+  {ja:'routine',romaji:'roo-teen',en:'日常惯例',pos:'noun',grammar:'名词"常规、惯例"，daily routine 日常。',example:'What is your daily routine?'}
+ ],
+ listen:[
+  {say:'I usually go to work by bus',answer:'我通常坐公交车上班',wrong:['我从不坐公交上班','我坐公交回家','我不上班'],grammar:'usually 通常，by bus 乘公交，go to work 上班。'},
+  {say:'I never eat breakfast',answer:'我从不吃早餐',wrong:['我经常吃早餐','我不吃晚餐','我昨天没吃'],grammar:'never = 从不，本身否定，句中不再加 not。'},
+  {say:'I do housework on Sunday',answer:'我周日做家务',wrong:['我周日工作','我周日休息','我周日锻炼'],grammar:'do housework = 做家务，on + 星期。'},
+  {say:'I relax after work',answer:'我下班后放松',wrong:['我上班后放松','我工作时放松','我不放松'],grammar:'after work = 下班后，after + 名词。'},
+  {say:'My daily routine is simple',answer:'我的日常很简单',wrong:['我的日常很忙','我的工作很累','我很简单'],grammar:'routine = 日常惯例，simple = 简单。'}
+ ],
+ speak:[
+  {ja:'I usually get up at seven',romaji:'I yoo-zhuh-lee get ap at sev-en',en:'我通常七点起床',hint:'作息'},
+  {ja:'I never eat fast food',romaji:'I nev-er eat fast food',en:'我从不吃快餐',hint:'习惯'},
+  {ja:'I do housework on Sunday',romaji:'I do hous-werk on sun-day',en:'我周日做家务',hint:'家务'},
+  {ja:'I relax with music',romaji:'I ri-laks with myoo-zik',en:'我听音乐放松',hint:'放松'}
+ ],
+ grammar:[
+  {title:'频率副词的位置',rule:'usually/sometimes 在实义动词前，never 也不加 not；always 紧贴动词。',example:'I always am... → I am always...'},
+  {title:'一般现在时表习惯',rule:'习惯性动作用一般现在时，第三人称单数动词加 s/es。',example:'He works every day.'},
+  {title:'介词 on / after / by',rule:'on+星期，after+时间点之后，by+交通方式/截止时间。',example:'on Monday, after work, by bus'}
+ ]},
+{id:'en_feel',icon:'😊',name:'Feelings',desc:'I feel…',locked:true,
+ vocab:[
+  {ja:'I feel',romaji:'I feel',en:'我感觉',pos:'phrase',grammar:'feel + 形容词，表达自身感受，不用 be。',example:'I feel happy today. (我今天很开心。)'},
+  {ja:'excited',romaji:'ik-sy-ted',en:'兴奋的',pos:'i-adj',grammar:'-ed 结尾形容人的感受，-ing 形容事物。',example:'I am excited about the trip.'},
+  {ja:'nervous',romaji:'nerv-us',en:'紧张的',pos:'i-adj',grammar:'be nervous about... 对…紧张。',example:'I am nervous before exams.'},
+  {ja:'proud',romaji:'prawd',en:'骄傲的',pos:'i-adj',grammar:'be proud of = 为…骄傲。',example:'I am proud of you. (我为你骄傲。)'},
+  {ja:'bored',romaji:'bord',en:'无聊的',pos:'i-adj',grammar:'-ed 形容人的感受，-ing 形容事物无聊。',example:'This movie is boring.'},
+  {ja:'surprised',romaji:'ser-pryzd',en:'惊讶的',pos:'i-adj',grammar:'be surprised at = 对…惊讶。',example:'I am surprised to see you.'},
+  {ja:'worried',romaji:'wur-id',en:'担心的',pos:'i-adj',grammar:'be worried about = 担心…。',example:'I am worried about the test.'},
+  {ja:'glad',romaji:'glad',en:'高兴的',pos:'i-adj',grammar:'be glad to do = 很高兴做…。',example:'I am glad to help you.'}
+ ],
+ listen:[
+  {say:'I feel very happy today',answer:'我今天感觉很开心',wrong:['我今天很难过','我今天很累','我今天很忙'],grammar:'feel + 形容词表达感受，very 修饰程度。'},
+  {say:'I am excited about the trip',answer:'我对这次旅行很兴奋',wrong:['我对旅行很担心','我对旅行很无聊','我取消了旅行'],grammar:'be excited about = 对…感到兴奋。'},
+  {say:'She is proud of you',answer:'她为你感到骄傲',wrong:['她为你感到难过','她为你感到生气','她为你感到担心'],grammar:'be proud of = 为…骄傲，of 表所属。'},
+  {say:'The book is boring',answer:'这本书很无聊',wrong:['这本书很有趣','我很无聊','我讨厌读书'],grammar:'-ing 形容事物本身，-ed 形容人的感受。'},
+  {say:'I am nervous before the exam',answer:'考试前我很紧张',wrong:['考试后我很紧张','我考试得了高分','我不紧张'],grammar:'before = 在…之前，be nervous 紧张。'}
+ ],
+ speak:[
+  {ja:'I feel happy',romaji:'I feel ha-pee',en:'我感觉开心',hint:'表达感受'},
+  {ja:'I am excited',romaji:'I am ik-sy-ted',en:'我很兴奋',hint:'兴奋'},
+  {ja:'I am proud of you',romaji:'I am prawd uv yoo',en:'我为你骄傲',hint:'骄傲'},
+  {ja:'I am nervous',romaji:'I am nerv-us',en:'我很紧张',hint:'紧张'}
+ ],
+ grammar:[
+  {title:'feel + 形容词',rule:'表达感受用 feel + adj，不用 be：I feel happy（我感觉快乐）。',example:'I feel tired. (我感觉累。)'},
+  {title:'-ed vs -ing 形容词',rule:'-ed 形容人的感受（I am bored），-ing 形容事物特性（The class is boring）。',example:'The game is exciting. I am excited.'},
+  {title:'be + 情绪形容词 + 介词',rule:'proud of、worried about、excited about 等固定搭配要牢记。',example:'I am worried about the result.'}
+ ]}
+];
+
+// ===== 状态 =====
+let state={lang:'ja',xp:{ja:0,en:0},streak:{ja:0,en:0},correct:{ja:0,en:0},total:{ja:0,en:0},done:{ja:{},en:{}},wrongBook:{ja:[],en:[]},lesson:null,step:0,queue:[]};
+function L(){return state.lang;}
+function lessons(){return L()==='ja'?JA_LESSONS:EN_LESSONS;}
+function save(){localStorage.setItem('nihongo_state2',JSON.stringify(state));}
+function load(){const s=localStorage.getItem('nihongo_state2')||localStorage.getItem('nihongo_state');if(s){try{const o=JSON.parse(s);state=Object.assign(state,o);}catch(e){}}}
+function updateHeader(){
+  const k=L();
+  document.getElementById('streak').textContent=state.streak[k];
+  document.getElementById('xp').textContent=state.xp[k];
+  const t=state.total[k],c=state.correct[k];
+  document.getElementById('acc').textContent=t?Math.round(c/t*100)+'%':'0%';
+  document.getElementById('total').textContent=t;
+}
 function setStatus(t,cls){const s=document.getElementById('status');s.textContent=t;s.className='status'+(cls?' '+cls:'');}
 function setProg(p){document.getElementById('progBar').style.width=p+'%';}
-function speak(text,lang='ja-JP'){if(!('speechSynthesis' in window)){return;}const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=0.85;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function speakTTS(text,lang){if(!('speechSynthesis' in window))return;const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=0.85;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function ttsLang(){return L()==='ja'?'ja-JP':'en-US';}
+function targetLang(){return L()==='ja'?'en-US':'ja-JP';} // 练习目标语言的语音识别语种
 function showHome(){
-  state.view='home';save();updateHeader();setProg(0);setStatus('选择课程或练习模式开始学习','');
+  save();updateHeader();setProg(0);setStatus('当前：'+(L()==='ja'?'🇯🇵 日语课程':'🇺🇸 英语课程')+' · 选择课程或练习模式开始','');
   const c=document.getElementById('content');
+  const LS=lessons();
   let html='<div class="panel"><h3>课程（闯关解锁）</h3><div class="lessons">';
-  LESSONS.forEach((L,i)=>{
-    const unlocked=i===0||state.done[LESSONS[i-1].id]||!L.locked;
-    const done=state.done[L.id];
-    html+=`<div class="lesson ${done?'done':''} ${unlocked?'':'locked'}" data-id="${L.id}"><div class="icon">${L.icon}</div><div class="name">${L.name}</div><div class="desc">${L.desc}</div>${done?'<div style="color:var(--accent);font-weight:700;margin-top:6px">✓ 已完成</div>':unlocked?'':'<div style="color:var(--muted);margin-top:6px">🔒 未解锁</div>'}</div>`;
+  LS.forEach((Lx,i)=>{
+    const unlocked=i===0||state.done[L()][LS[i-1].id]||!Lx.locked;
+    const done=state.done[L()][Lx.id];
+    html+=`<div class="lesson ${done?'done':''} ${unlocked?'':'locked'}" data-id="${Lx.id}"><div class="icon">${Lx.icon}</div><div class="name">${Lx.name}</div><div class="desc">${Lx.desc}</div>${done?'<div style="color:var(--accent);font-weight:700;margin-top:6px">✓ 已完成</div>':unlocked?'':'<div style="color:var(--muted);margin-top:6px">🔒 未解锁</div>'}</div>`;
   });
   html+='</div></div>';
-  html+='<div class="panel"><h3>快速练习</h3><div class="lessons"><div class="lesson" data-act="vocab"><div class="icon">📚</div><div class="name">单词</div><div class="desc">随机词汇测验</div></div><div class="lesson" data-act="listen"><div class="icon">🎧</div><div class="name">听力</div><div class="desc">听日语选英文</div></div><div class="lesson" data-act="speak"><div class="icon">🎤</div><div class="name">口语</div><div class="desc">语音识别跟读</div></div><div class="lesson" data-act="wrong"><div class="icon">🔁</div><div class="name">错题本</div><div class="desc">'+state.wrongBook.length+' 题待复习</div></div></div></div>';
+  html+='<div class="panel"><h3>快速练习</h3><div class="lessons"><div class="lesson" data-act="vocab"><div class="icon">📚</div><div class="name">单词</div><div class="desc">随机词汇测验</div></div><div class="lesson" data-act="listen"><div class="icon">🎧</div><div class="name">听力</div><div class="desc">听目标语言选意思</div></div><div class="lesson" data-act="speak"><div class="icon">🎤</div><div class="name">口语</div><div class="desc">语音识别跟读</div></div><div class="lesson" data-act="wrong"><div class="icon">🔁</div><div class="name">错题本</div><div class="desc">'+state.wrongBook[L()].length+' 题待复习</div></div></div></div>';
   c.innerHTML=html;
   c.querySelectorAll('.lesson').forEach(el=>{el.onclick=()=>{const id=el.dataset.id,act=el.dataset.act;if(act==='vocab'){startPractice('vocab');return;}if(act==='listen'){startPractice('listen');return;}if(act==='speak'){startPractice('speak');return;}if(act==='wrong'){startWrong();return;}if(id)startLesson(id);};});
 }
-function startLesson(id){const L=LESSONS.find(x=>x.id===id);if(!L)return;state.lesson=L;state.step=0;const q=[];L.vocab.slice(0,4).forEach(v=>q.push({type:'vocab',data:v}));L.listen.slice(0,4).forEach(v=>q.push({type:'listen',data:v}));L.speak.slice(0,3).forEach(v=>q.push({type:'speak',data:v}));state.queue=q;renderQ();}
-function startPractice(type){let pool;if(type==='vocab')pool=LESSONS.flatMap(L=>L.vocab);else if(type==='listen')pool=LESSONS.flatMap(L=>L.listen);else pool=LESSONS.flatMap(L=>L.speak);const shuffled=pool.sort(()=>Math.random()-0.5).slice(0,6);state.lesson=null;state.queue=shuffled.map(d=>({type,data:d}));state.step=0;renderQ();}
-function startWrong(){if(!state.wrongBook.length){setStatus('错题本为空，太棒了！','good');showHome();return;}state.lesson=null;state.queue=state.wrongBook.slice(0,8).map(w=>({type:w.type,data:w.data}));state.step=0;renderQ();}
-function renderQ(){updateHeader();save();if(state.step>=state.queue.length){if(state.lesson){state.done[state.lesson.id]=true;save();}setStatus('本轮完成！经验 +'+(state.step*10),'good');setProg(100);const c=document.getElementById('content');c.innerHTML=`<div class="qcard" style="text-align:center"><div class="score-ring">${Math.round(state.total?state.correct/state.total*100:100)}%</div><div style="font-size:20px;font-weight:700">本轮完成！</div><div style="color:var(--muted);margin-top:8px">经验 +${state.queue.length*10} · 连续 ${state.streak}🔥</div><button class="primary" style="margin-top:18px" onclick="showHome()">返回课程首页</button></div>`;return;}const q=state.queue[state.step];setProg(Math.round(state.step/state.queue.length*100));setStatus(`第 ${state.step+1}/${state.queue.length} 题 · ${q.type==='vocab'?'单词':q.type==='listen'?'听力':'口语'}`,'');const c=document.getElementById('content');if(q.type==='vocab')renderVocab(q.data);else if(q.type==='listen')renderListen(q.data);else renderSpeak(q.data);}
-function renderVocab(v){const c=document.getElementById('content');const pool=LESSONS.flatMap(L=>L.vocab).filter(x=>x.en!==v.en);const wrong=[...pool].sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.en);const choices=[v.en,...wrong].sort(()=>Math.random()-0.5);c.innerHTML=`<div class="qcard"><div class="qtype">📚 单词 · 选择正确英文</div><div class="qtext">${v.ja}</div><div class="qsub">${v.romaji} · ${v.pos}</div><button class="audio-btn" title="朗读日语">🔊</button><div class="choices">${choices.map(ch=>`<div class="choice" data-en="${ch}">${ch}</div>`).join('')}</div><div class="feedback" id="fb"></div><button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button></div>`;c.querySelector('.audio-btn').onclick=()=>speak(v.ja,'ja-JP');c.querySelectorAll('.choice').forEach(el=>{el.onclick=()=>{const ok=el.dataset.en===v.en;c.querySelectorAll('.choice').forEach(x=>{x.classList.add('disabled');if(x.dataset.en===v.en)x.classList.add('correct');});if(!ok)el.classList.add('wrong');grade(ok,{type:'vocab',data:v},`正确答案：<b>${v.en}</b>`,v.grammar,v.example);};});document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};}
-function renderListen(v){const c=document.getElementById('content');const choices=[v.answer,...v.wrong].sort(()=>Math.random()-0.5);c.innerHTML=`<div class="qcard"><div class="qtype">🎧 听力 · 听日语选英文意思</div><button class="audio-btn" id="playBtn">🔊</button><div class="qsub">点击播放日语发音（可重复听）</div><div class="choices">${choices.map(ch=>`<div class="choice" data-en="${ch}">${ch}</div>`).join('')}</div><div class="feedback" id="fb"></div><button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button></div>`;const play=()=>speak(v.say,'ja-JP');c.querySelector('#playBtn').onclick=play;setTimeout(play,300);c.querySelectorAll('.choice').forEach(el=>{el.onclick=()=>{const ok=el.dataset.en===v.answer;c.querySelectorAll('.choice').forEach(x=>{x.classList.add('disabled');if(x.dataset.en===v.answer)x.classList.add('correct');});if(!ok)el.classList.add('wrong');grade(ok,{type:'listen',data:v},`正确答案：<b>${v.answer}</b>`,v.grammar,`原句：${v.say}`);};});document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};}
+function startLesson(id){const LS=lessons();const Lx=LS.find(x=>x.id===id);if(!Lx)return;state.lesson=Lx;state.step=0;const q=[];Lx.vocab.slice(0,5).forEach(v=>q.push({type:'vocab',data:v}));Lx.listen.slice(0,4).forEach(v=>q.push({type:'listen',data:v}));Lx.speak.slice(0,3).forEach(v=>q.push({type:'speak',data:v}));state.queue=q;renderQ();}
+function startPractice(type){const LS=lessons();let pool;if(type==='vocab')pool=LS.flatMap(x=>x.vocab);else if(type==='listen')pool=LS.flatMap(x=>x.listen);else pool=LS.flatMap(x=>x.speak);const shuffled=pool.sort(()=>Math.random()-0.5).slice(0,6);state.lesson=null;state.queue=shuffled.map(d=>({type,data:d}));state.step=0;renderQ();}
+function startWrong(){if(!state.wrongBook[L()].length){setStatus('错题本为空，太棒了！','good');showHome();return;}state.lesson=null;state.queue=state.wrongBook[L()].slice(0,8).map(w=>({type:w.type,data:w.data}));state.step=0;renderQ();}
+function renderQ(){updateHeader();save();if(state.step>=state.queue.length){if(state.lesson){state.done[L()][state.lesson.id]=true;save();}setStatus('本轮完成！经验 +'+(state.step*10),'good');setProg(100);const c=document.getElementById('content');c.innerHTML=`<div class="qcard" style="text-align:center"><div class="score-ring">${Math.round(state.total[L()]?state.correct[L()]/state.total[L()]*100:100)}%</div><div style="font-size:20px;font-weight:700">本轮完成！</div><div style="color:var(--muted);margin-top:8px">经验 +${state.queue.length*10} · 连续 ${state.streak[L()]}🔥</div><button class="primary" style="margin-top:18px" onclick="showHome()">返回课程首页</button></div>`;return;}const q=state.queue[state.step];setProg(Math.round(state.step/state.queue.length*100));setStatus(`第 ${state.step+1}/${state.queue.length} 题 · ${q.type==='vocab'?'单词':q.type==='listen'?'听力':'口语'}`,'');const c=document.getElementById('content');if(q.type==='vocab')renderVocab(q.data);else if(q.type==='listen')renderListen(q.data);else renderSpeak(q.data);}
+function renderVocab(v){
+  const c=document.getElementById('content');
+  const isJA=L()==='ja';
+  const term=isJA?v.ja:v.ja;
+  const romaji=v.romaji;
+  const answer=isJA?v.en:v.en;
+  const pool=lessons().flatMap(x=>x.vocab).filter(x=>x.en!==v.en);
+  const wrong=[...pool].sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.en);
+  const choices=[answer,...wrong].sort(()=>Math.random()-0.5);
+  const label=isJA?'📚 单词 · 选择正确英文':'📚 单词 · 选择正确中文';
+  const html='<div class="qcard"><div class="qtype">'+label+'</div><div class="qtext">'+term+'</div><div class="qsub">'+romaji+' · '+v.pos+'</div><button class="audio-btn" title="朗读">🔊</button><div class="choices">'+choices.map(ch=>'<div class="choice" data-en="'+ch+'">'+ch+'</div>').join('')+'</div><div class="feedback" id="fb"></div><button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button></div>';
+  c.innerHTML=html;
+  c.querySelector('.audio-btn').onclick=()=>speakTTS(term,ttsLang());
+  c.querySelectorAll('.choice').forEach(el=>{el.onclick=()=>{const ok=el.dataset.en===answer;c.querySelectorAll('.choice').forEach(x=>{x.classList.add('disabled');if(x.dataset.en===answer)x.classList.add('correct');});if(!ok)el.classList.add('wrong');grade(ok,{type:'vocab',data:v},'正确答案：<b>'+answer+'</b>',v.grammar,v.example);};});
+  document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};
+}
+function renderListen(v){
+  const c=document.getElementById('content');
+  const choices=[v.answer,...v.wrong].sort(()=>Math.random()-0.5);
+  const html='<div class="qcard"><div class="qtype">🎧 听力 · 听'+(L()==='ja'?'日语选英文意思':'英语选中文意思')+'</div><button class="audio-btn" id="playBtn">🔊</button><div class="qsub">点击播放发音（可重复听）</div><div class="choices">'+choices.map(ch=>'<div class="choice" data-en="'+ch+'">'+ch+'</div>').join('')+'</div><div class="feedback" id="fb"></div><button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button></div>';
+  c.innerHTML=html;
+  const play=()=>speakTTS(v.say,ttsLang());
+  c.querySelector('#playBtn').onclick=play;
+  setTimeout(play,300);
+  c.querySelectorAll('.choice').forEach(el=>{el.onclick=()=>{const ok=el.dataset.en===v.answer;c.querySelectorAll('.choice').forEach(x=>{x.classList.add('disabled');if(x.dataset.en===v.answer)x.classList.add('correct');});if(!ok)el.classList.add('wrong');grade(ok,{type:'listen',data:v},'正确答案：<b>'+v.answer+'</b>',v.grammar,'原句：'+v.say);};});
+  document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};
+}
 function renderSpeak(v){
   const c=document.getElementById('content');
   const supported=('webkitSpeechRecognition' in window)||('SpeechRecognition' in window);
   const disabledAttr = supported ? '' : 'disabled';
   const titleAttr = supported ? '点击开始录音' : '当前浏览器不支持语音识别';
-  const statusText = supported ? '点击麦克风开始朗读（日语识别）' : '此浏览器不支持语音识别，可点击看提示跳过';
+  const statusText = supported ? '点击麦克风开始朗读（'+(L()==='ja'?'日语':'英语')+'识别）' : '此浏览器不支持语音识别，可点击看提示跳过';
   const html =
     '<div class="qcard">' +
-    '<div class="qtype">🎤 口语 · 大声读出日语句子</div>' +
+    '<div class="qtype">🎤 口语 · 大声读出'+(L()==='ja'?'日语':'英语')+'句子</div>' +
     '<div class="qtext">'+v.ja+'</div>' +
     '<div class="qsub">'+v.romaji+' — '+v.en+' · '+v.hint+'</div>' +
     '<button class="audio-btn" id="listenBtn">🔊 先听一遍</button>' +
@@ -351,19 +676,19 @@ function renderSpeak(v){
     '<button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button>' +
     '</div>';
   c.innerHTML = html;
-  document.getElementById('listenBtn').onclick=()=>speak(v.ja,'ja-JP');
+  document.getElementById('listenBtn').onclick=()=>speakTTS(v.ja,ttsLang());
   const micBtn=document.getElementById('micBtn');
   const fb=document.getElementById('fb');
   const showHint=()=>{document.getElementById('hintRow').style.display='flex';};
   document.getElementById('skipBtn').onclick=()=>{
-    grade(false,{type:'speak',data:v},'已跳过（看提示）','口语需要多练习，点击🔊反复跟读，注意音拍节奏。','正确读法：'+v.ja+' ('+v.romaji+')');
+    grade(false,{type:'speak',data:v},'已跳过（看提示）','口语需要多练习，点击🔊反复跟读，注意音拍节奏与语调。','正确读法：'+v.ja+' ('+v.romaji+')');
   };
   if(supported){
     micBtn.onclick=()=>{
       const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-      const rec=new SR(); rec.lang='ja-JP'; rec.interimResults=false; rec.maxAlternatives=5;
+      const rec=new SR(); rec.lang=targetLang(); rec.interimResults=false; rec.maxAlternatives=5;
       micBtn.classList.add('recording');
-      document.getElementById('micStatus').textContent='正在聆听…请朗读日语';
+      document.getElementById('micStatus').textContent='正在聆听…请朗读句子';
       rec.onresult=(e)=>{
         const alts=Array.prototype.slice.call(e.results[0]).map(r=>r.transcript.toLowerCase().replace(/\s+/g,''));
         const target=v.ja.toLowerCase().replace(/\s+/g,'');
@@ -371,7 +696,7 @@ function renderSpeak(v){
         const matched=alts.some(a=>a.includes(target)||a.includes(romaji)||target.includes(a)||levenshtein(a,target)<3);
         micBtn.classList.remove('recording');
         document.getElementById('micStatus').textContent='识别结果：'+e.results[0][0].transcript;
-        grade(matched,{type:'speak',data:v},matched?'发音相似度良好！':'发音与原文有差异',matched?'继续保持！注意日语的清音与浊音区别。':'日语是音节语言，每个假名一拍，注意长音与促音。建议点击🔊反复跟读。','正确读法：'+v.ja+' ('+v.romaji+')');
+        grade(matched,{type:'speak',data:v},matched?'发音相似度良好！':'发音与原文有差异',matched?'继续保持！注意目标语言的重音与连读。':'目标语言是音节语言/重音语言，注意节奏。建议点击🔊反复跟读。','正确读法：'+v.ja+' ('+v.romaji+')');
       };
       rec.onerror=()=>{micBtn.classList.remove('recording');document.getElementById('micStatus').textContent='识别失败，请重试或点击看提示';showHint();};
       rec.onend=()=>{micBtn.classList.remove('recording');if(!fb.classList.contains('show'))showHint();};
@@ -383,12 +708,43 @@ function renderSpeak(v){
   document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};
 }
 function levenshtein(a,b){const m=a.length,n=b.length;const dp=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);for(let j=0;j<=n;j++)dp[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return dp[m][n];}
-function grade(ok,q,correctMsg,grammar,example){state.total++;if(ok){state.correct++;state.streak++;state.xp+=10;}else{state.streak=0;if(!state.wrongBook.some(w=>w.data===q.data))state.wrongBook.push(q);}save();updateHeader();const fb=document.getElementById('fb');fb.className='feedback show '+(ok?'good':'bad');fb.innerHTML=`<div class="fb-title">${ok?'✅ 正确！+10 XP':'❌ 错误 · 语法详解'}</div><div class="fb-body"><div>${correctMsg}</div><div class="grammar"><b>📖 语法/词汇详解：</b><br>${grammar}</div>${example?`<div class="example">例句：${example}</div>`:''}${!ok?'<div class="example" style="color:var(--accent3)">已加入错题本，可在「错题本」中复习。</div>':''}</div>`;document.getElementById('nextBtn').style.display='inline-block';}
+function grade(ok,q,correctMsg,grammar,example){
+  const k=L();
+  state.total[k]++;
+  if(ok){state.correct[k]++;state.streak[k]++;state.xp[k]+=10;}
+  else{state.streak[k]=0;if(!state.wrongBook[k].some(w=>w.data===q.data))state.wrongBook[k].push(q);}
+  save();updateHeader();
+  const fb=document.getElementById('fb');
+  fb.className='feedback show '+(ok?'good':'bad');
+  fb.innerHTML='<div class="fb-title">'+(ok?'✅ 正确！+10 XP':'❌ 错误 · 语法详解')+'</div><div class="fb-body"><div>'+correctMsg+'</div><div class="grammar"><b>📖 语法/词汇详解：</b><br>'+grammar+'</div>'+(example?'<div class="example">例句：'+example+'</div>':'')+(!ok?'<div class="example" style="color:var(--accent3)">已加入错题本，可在「错题本」中复习。</div>':'')+'</div>';
+  document.getElementById('nextBtn').style.display='inline-block';
+}
+// ===== 语言切换 =====
+document.querySelectorAll('#langSwitch button').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('#langSwitch button').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    state.lang=btn.dataset.lang;
+    state.lesson=null; state.step=0; state.queue=[];
+    save(); showHome();
+  };
+});
 document.getElementById('homeBtn').onclick=showHome;
 document.getElementById('vocabBtn').onclick=()=>startPractice('vocab');
 document.getElementById('listenBtn').onclick=()=>startPractice('listen');
 document.getElementById('speakBtn').onclick=()=>startPractice('speak');
-document.getElementById('grammarBtn').onclick=()=>{const c=document.getElementById('content');let html='<div class="panel"><h3>📖 语法详解汇总</h3>';LESSONS.forEach(L=>{html+=`<div style="margin-bottom:14px"><div style="font-weight:700;color:var(--accent);margin-bottom:6px">${L.icon} ${L.name}</div>`;L.grammar.forEach(g=>{html+=`<div style="background:#0b1220;border-left:4px solid var(--accent3);padding:10px 14px;border-radius:0 8px 8px 0;margin:6px 0;font-size:14px"><b>${g.title}</b><br>${g.rule}<div style="color:var(--muted);margin-top:4px">例：${g.example}</div></div>`;});html+='</div>';});html+='</div>';c.innerHTML=html;setStatus('语法详解汇总','');setProg(0);};
+document.getElementById('grammarBtn').onclick=()=>{
+  const c=document.getElementById('content');
+  const LS=lessons();
+  let html='<div class="panel"><h3>📖 语法详解汇总（'+(L()==='ja'?'日语':'英语')+'）</h3>';
+  LS.forEach(Lx=>{
+    html+='<div style="margin-bottom:14px"><div style="font-weight:700;color:var(--accent);margin-bottom:6px">'+Lx.icon+' '+Lx.name+'</div>';
+    Lx.grammar.forEach(g=>{html+='<div class="grammar-card"><b>'+g.title+'</b><br>'+g.rule+'<div class="ex">例：'+g.example+'</div></div>';});
+    html+='</div>';
+  });
+  html+='</div>';
+  c.innerHTML=html;setStatus('语法详解汇总','');setProg(0);
+};
 document.getElementById('reviewBtn').onclick=startWrong;
 load();showHome();updateHeader();
 </script>
