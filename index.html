@@ -80,22 +80,70 @@ footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 </style>
+
+<style>
+:root{--duo-green:#58cc02;--duo-green-dark:#46a302;--duo-blue:#1cb0f6;--duo-red:#ff4b4b;--duo-gold:#ffc800;--duo-purple:#ce82ff;--duo-orange:#ff9600}
+body{padding-top:24px}
+.topbar{width:100%;max-width:960px;display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;background:linear-gradient(90deg,rgba(88,204,2,.12),rgba(28,176,248,.08));border:1px solid var(--line);border-radius:16px;padding:12px 18px}
+.mascot{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8ee64a,#58cc02 65%,#3f9c02);display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 6px 0 #3f9c02,0 12px 24px rgba(88,204,2,.35);flex-shrink:0;animation:bob 2.6s ease-in-out infinite}
+.mascot.blue{background:radial-gradient(circle at 35% 30%,#6ed0ff,#1cb0f6 65%,#0d89c9);box-shadow:0 6px 0 #0d89c9,0 12px 24px rgba(28,176,248,.35)}
+.mascot.gold{background:radial-gradient(circle at 35% 30%,#ffe06a,#ffc800 65%,#d9a400);box-shadow:0 6px 0 #d9a400,0 12px 24px rgba(255,200,0,.35)}
+.mascot.purple{background:radial-gradient(circle at 35% 30%,#dfa6ff,#ce82ff 65%,#a255d6);box-shadow:0 6px 0 #a255d6,0 12px 24px rgba(206,130,255,.35)}
+.mascot .face{filter:drop-shadow(0 1px 0 rgba(0,0,0,.15))}
+.mascot-say{flex:1;min-width:220px;background:#0b1220;border:2px solid var(--line);border-radius:14px;padding:10px 16px;font-size:15px;line-height:1.6;position:relative;color:var(--text)}
+.mascot-say:before{content:"";position:absolute;left:-9px;top:26px;width:14px;height:14px;background:#0b1220;border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.mascot-say b{color:var(--duo-green)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.stat-pill{display:flex;align-items:center;gap:6px;background:#0b1220;border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:14px}
+.stat-pill b{color:var(--accent);font-size:16px}
+.hearts{display:flex;gap:3px;font-size:16px}
+.btn3d{border:none;border-radius:14px;padding:12px 20px;font-size:15px;font-weight:800;cursor:pointer;transition:.1s;letter-spacing:.5px;box-shadow:0 4px 0 rgba(0,0,0,.35)}
+.btn3d:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.btn3d.green{background:var(--duo-green);color:#fff;box-shadow:0 4px 0 var(--duo-green-dark)}
+.btn3d.blue{background:var(--duo-blue);color:#fff;box-shadow:0 4px 0 #0a86c2}
+.btn3d.red{background:var(--duo-red);color:#fff;box-shadow:0 4px 0 #c62f2f}
+.btn3d.gold{background:var(--duo-gold);color:#4a3500;box-shadow:0 4px 0 #c99b00}
+.choice{border-radius:14px;border-width:2px;border-bottom-width:4px;padding:14px 18px;font-size:17px;font-weight:600}
+.choice:hover{border-color:var(--duo-blue);background:rgba(28,176,248,.12);transform:translateY(-1px)}
+.choice:active{transform:translateY(2px)}
+.choice.correct{border-color:var(--duo-green);background:rgba(88,204,2,.22)}
+.choice.wrong{border-color:var(--duo-red);background:rgba(255,75,75,.22)}
+.lesson{border-radius:16px;border-bottom-width:5px;padding:18px 14px}
+.lesson:hover{border-color:var(--duo-green);transform:translateY(-4px)}
+.lesson:active{transform:translateY(0)}
+.qcard{border-radius:20px;border-width:2px}
+.path-wrap{display:flex;justify-content:center;gap:8px;margin-bottom:6px}
+.char-tab{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.char-tab button{border-radius:20px;padding:7px 16px;font-weight:700;font-size:14px}
+.char-tab button.on{background:var(--duo-blue);color:#04121f;border-color:var(--duo-blue)}
+.speak-progress{height:14px;background:#0b1220;border-radius:7px;overflow:hidden;margin-top:8px}
+.speak-progress .bar{height:100%;background:linear-gradient(90deg,var(--duo-green),var(--duo-gold));transition:.2s;border-radius:7px}
+.wave{display:inline-block;letter-spacing:2px;color:var(--duo-blue);font-weight:700}
+.badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.badge{background:#0b1220;border:2px solid var(--duo-gold);color:var(--duo-gold);border-radius:12px;padding:8px 14px;font-size:14px;font-weight:700}
+@media(max-width:640px){.topbar{flex-direction:column;align-items:stretch}.mascot-say:before{display:none}}
+</style>
 </head>
 <body>
+<div class="topbar">
+  <div class="mascot" id="mascot" title="点击我和你说话"><span class="face" id="mascotFace">🦉</span></div>
+  <div class="mascot-say" id="mascotSay">欢迎回来！我是 <b>鸮博士</b>，今天我们一起学<b id="mascotLang">日语</b>吧！点我听听提示～</div>
+  <div class="langswitch" id="langSwitch">
+    <button data-lang="ja" class="on">🇯🇵 日语</button>
+    <button data-lang="en">🇺🇸 英语</button>
+  </div>
+</div>
 <header>
   <div>
     <h1>Nihongo Master <span>· 日英学习</span></h1>
-    <div class="sub">单词 · 听力 · 口语 · 语法详解 · 多邻国式闯关</div>
-  </div>
-  <div class="langswitch" id="langSwitch">
-    <button data-lang="ja" class="on">🇯🇵 日语课程</button>
-    <button data-lang="en">🇺🇸 英语课程</button>
+    <div class="sub">多角色陪练 · 单词 · 听力 · 口语 · 语法详解 · 多邻国式闯关</div>
   </div>
   <div class="stats">
-    <div>连续 <b id="streak">0</b>🔥</div>
-    <div>经验 <b id="xp">0</b></div>
-    <div>正确率 <b id="acc">0%</b></div>
-    <div>总题 <b id="total">0</b></div>
+    <div class="stat-pill">经验 <b id="xp">0</b></div>
+    <div class="stat-pill">连续 <b id="streak">0</b>🔥</div>
+    <div class="stat-pill">正确率 <b id="acc">0%</b></div>
+    <div class="stat-pill">总题 <b id="total">0</b></div>
+    <div class="stat-pill">❤️ <div class="hearts" id="hearts">❤️❤️❤️❤️❤️</div></div>
   </div>
 </header>
 
@@ -592,8 +640,84 @@ const EN_LESSONS=[
  ]}
 ];
 
+
+// ===== 多角色音频 =====
+const CHARS={
+  owl:{name:'鸮博士',face:'🦉',voice:null,color:'',speed:0.85,pitch:0.9,
+    lines:{ja:{hi:'こんにちは！準備はいい？',good:'素晴らしい！その調子！',bad:'もう一回、ゆっくり読んでみよう。',tip:'発音は音節ごとに、はっきりと。'},
+           en:{hi:'Hello there! Ready to learn?',good:'Excellent work! Keep it up!',bad:'No worries, try reading it once more.',tip:'Mind the stress and linking sounds.'}}},
+  cat:{name:'咪酱',face:'🐱',voice:null,color:'blue',speed:0.95,pitch:1.4,
+    lines:{ja:{hi:'にゃー！いっしょにがんばろ！',good:'にゃんすげー！すごい！',bad:'にゃ…だいじょうぶ、つぎいくにゃ。',tip:'なまえの「な」がにゃ！って思うと覚えやすいにゃ。'},
+           en:{hi:'Meow! Let us study together!',good:'Purr-fect! You nailed it!',bad:'Meow? No problem, try again!',tip:'Cats say meow, you say the words!'}}},
+  fox:{name:'狐丸',face:'🦊',voice:null,color:'gold',speed:0.9,pitch:1.1,
+    lines:{ja:{hi:'おっ、来たか。今日は腕によりをかけようぞ。',good:'ふふ、なかなかの手だ。',bad:'甘いな！集中しろ。',tip:'敬語は状況で選ぶのだ。ビジネスでは「です・ます」。'},
+           en:{hi:'Ah, you arrived. Let us sharpen your skills.',good:'Heh, not bad at all.',bad:'Too easy for you? Focus!',tip:'In business English, prefer formal phrasing.'}}},
+  robot:{name:'RX-78',face:'🤖',voice:null,color:'purple',speed:0.8,pitch:0.6,
+    lines:{ja:{hi:'システム起動。学習プログラム開始。',good:'正解です。データ記録しました。',bad:'エラー。再試行してください。',tip:'「は」は「ワ」と発音する。論理演算ではない。'},
+           en:{hi:'System online. Learning module engaged.',good:'Correct. Data logged.',bad:'Error. Please retry.',tip:'Contractions: do not = do not, it is = it is.'}}}
+};
+let currentChar='owl';
+function pickVoices(){
+  if(!('speechSynthesis' in window))return;
+  const vs=speechSynthesis.getVoices();
+  if(!vs.length)return;
+  function pick(langPrefs,genderHint){
+    for(const pref of langPrefs){ const hit=vs.find(v=>v.lang&&v.lang.replace('_','-').toLowerCase().startsWith(pref)); if(hit)return hit; }
+    return null;
+  }
+  const jaList=vs.filter(v=>v.lang&&v.lang.toLowerCase().startsWith('ja'));
+  const enList=vs.filter(v=>v.lang&&v.lang.toLowerCase().startsWith('en'));
+  CHARS.owl.voice = pick(['ja'],null) || null;
+  CHARS.cat.voice  = jaList.find(v=>/female|zira|samantha|karen|kyoko|ai|haruka|female|女/i.test(v.name)) || jaList[jaList.length-1] || null;
+  CHARS.fox.voice  = jaList.find(v=>/male|david|alex|ryota|kenta|male|男/i.test(v.name)) || jaList[0] || null;
+  CHARS.robot.voice= null; // robot 用参数合成
+  CHARS._enVoice = pick(['en'],null);
+}
+if('speechSynthesis' in window){ pickVoices(); speechSynthesis.onvoiceschanged=pickVoices; }
+function speakAs(text,lang,charKey){
+  if(!('speechSynthesis' in window))return;
+  const key=charKey||currentChar;
+  const ch=CHARS[key]||CHARS.owl;
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;
+  u.rate=ch.speed; u.pitch=ch.pitch;
+  if(lang.startsWith('ja')&&ch.voice)u.voice=ch.voice;
+  if(lang.startsWith('en')&&CHARS._enVoice&&key==='owl')u.voice=CHARS._enVoice;
+  if(key==='robot'){u.rate=0.7;u.pitch=0.4;u.pitch=0.5;}
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+function mascotSay(kind,extra){
+  const ch=CHARS[currentChar];
+  const ln=ch.lines[L()]||ch.lines.ja;
+  let msg=ln[kind]||ln.hi;
+  if(extra)msg=msg+' '+extra;
+  const face=document.getElementById('mascotFace');
+  const say=document.getElementById('mascotSay');
+  const m=document.getElementById('mascot');
+  if(!face||!say)return;
+  face.textContent=ch.face;
+  m.className='mascot '+ch.color;
+  say.innerHTML='<b>'+ch.name+'：</b>'+msg;
+  speakAs(msg, L()==='ja'?'ja-JP':'en-US', currentChar);
+}
+function renderCharTabs(){
+  let wrap=document.getElementById('charTabs');
+  if(!wrap){wrap=document.createElement('div');wrap.id='charTabs';wrap.className='char-tab';
+    const hdr=document.querySelector('.toolbar'); if(hdr)hdr.parentNode.insertBefore(wrap,hdr);}
+  if(!wrap)return;
+  wrap.innerHTML='';
+  Object.keys(CHARS).forEach(k=>{
+    const b=document.createElement('button');
+    b.textContent=CHARS[k].face+' '+CHARS[k].name;
+    if(k===currentChar)b.classList.add('on');
+    b.onclick=()=>{currentChar=k;renderCharTabs();mascotSay('hi');};
+    wrap.appendChild(b);
+  });
+}
 // ===== 状态 =====
-let state={lang:'ja',xp:{ja:0,en:0},streak:{ja:0,en:0},correct:{ja:0,en:0},total:{ja:0,en:0},done:{ja:{},en:{}},wrongBook:{ja:[],en:[]},lesson:null,step:0,queue:[]};
+
+let state={lang:'ja',xp:{ja:0,en:0},streak:{ja:0,en:0},correct:{ja:0,en:0},total:{ja:0,en:0},done:{ja:{},en:{}},wrongBook:{ja:[],en:[]},hearts:{ja:5,en:5},lesson:null,step:0,queue:[]};
 function L(){return state.lang;}
 function lessons(){return L()==='ja'?JA_LESSONS:EN_LESSONS;}
 function save(){localStorage.setItem('nihongo_state2',JSON.stringify(state));}
@@ -605,14 +729,18 @@ function updateHeader(){
   const t=state.total[k],c=state.correct[k];
   document.getElementById('acc').textContent=t?Math.round(c/t*100)+'%':'0%';
   document.getElementById('total').textContent=t;
+  const h=state.hearts[k];
+  const el=document.getElementById('hearts');
+  if(el){el.innerHTML='';for(let i=0;i<5;i++){const sp=document.createElement('span');sp.textContent=i<h?'❤️':'🖤';el.appendChild(sp);}}
+  const ml=document.getElementById('mascotLang'); if(ml)ml.textContent=k==='ja'?'日语':'英语';
 }
 function setStatus(t,cls){const s=document.getElementById('status');s.textContent=t;s.className='status'+(cls?' '+cls:'');}
 function setProg(p){document.getElementById('progBar').style.width=p+'%';}
-function speakTTS(text,lang){if(!('speechSynthesis' in window))return;const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=0.85;speechSynthesis.cancel();speechSynthesis.speak(u);}
+function speakTTS(text,lang){speakAs(text,lang,currentChar);}
 function ttsLang(){return L()==='ja'?'ja-JP':'en-US';}
 function targetLang(){return L()==='ja'?'en-US':'ja-JP';} // 练习目标语言的语音识别语种
 function showHome(){
-  save();updateHeader();setProg(0);setStatus('当前：'+(L()==='ja'?'🇯🇵 日语课程':'🇺🇸 英语课程')+' · 选择课程或练习模式开始','');
+  save();updateHeader();setProg(0);renderCharTabs();setStatus('当前：'+(L()==='ja'?'🇯🇵 日语课程':'🇺🇸 英语课程')+' · 选择课程或练习模式开始','');
   const c=document.getElementById('content');
   const LS=lessons();
   let html='<div class="panel"><h3>课程（闯关解锁）</h3><div class="lessons">';
@@ -670,7 +798,9 @@ function renderSpeak(v){
     '<div class="qsub">'+v.romaji+' — '+v.en+' · '+v.hint+'</div>' +
     '<button class="audio-btn" id="listenBtn">🔊 先听一遍</button>' +
     '<div style="margin-top:10px"><button class="mic-btn" id="micBtn" '+disabledAttr+' title="'+titleAttr+'">🎤</button>' +
-    '<div class="qsub" id="micStatus">'+statusText+'</div></div>' +
+    '<div class="qsub" id="micStatus">'+statusText+'</div>' +
+    '<div class="speak-progress"><div class="bar" id="spkBar" style="width:0%"></div></div>' +
+    '<div class="wave" id="spkWave">▮▯▯▯▯</div></div>' +
     '<div class="input-row" id="hintRow" style="display:none"><div style="flex:1;color:var(--muted);font-size:14px">提示：'+v.romaji+' · '+v.en+'</div><button class="blue" id="skipBtn">看提示，继续</button></div>' +
     '<div class="feedback" id="fb"></div>' +
     '<button class="primary" id="nextBtn" style="margin-top:14px;display:none">下一题 →</button>' +
@@ -689,6 +819,7 @@ function renderSpeak(v){
       const rec=new SR(); rec.lang=targetLang(); rec.interimResults=false; rec.maxAlternatives=5;
       micBtn.classList.add('recording');
       document.getElementById('micStatus').textContent='正在聆听…请朗读句子';
+      animateWave();
       rec.onresult=(e)=>{
         const alts=Array.prototype.slice.call(e.results[0]).map(r=>r.transcript.toLowerCase().replace(/\s+/g,''));
         const target=v.ja.toLowerCase().replace(/\s+/g,'');
@@ -696,6 +827,7 @@ function renderSpeak(v){
         const matched=alts.some(a=>a.includes(target)||a.includes(romaji)||target.includes(a)||levenshtein(a,target)<3);
         micBtn.classList.remove('recording');
         document.getElementById('micStatus').textContent='识别结果：'+e.results[0][0].transcript;
+        const bar=document.getElementById('spkBar'); if(bar)bar.style.width=(matched?'100%':'55%');
         grade(matched,{type:'speak',data:v},matched?'发音相似度良好！':'发音与原文有差异',matched?'继续保持！注意目标语言的重音与连读。':'目标语言是音节语言/重音语言，注意节奏。建议点击🔊反复跟读。','正确读法：'+v.ja+' ('+v.romaji+')');
       };
       rec.onerror=()=>{micBtn.classList.remove('recording');document.getElementById('micStatus').textContent='识别失败，请重试或点击看提示';showHint();};
@@ -707,17 +839,26 @@ function renderSpeak(v){
   }
   document.getElementById('nextBtn').onclick=()=>{state.step++;renderQ();};
 }
+let waveTimer=null;
+function animateWave(){
+  const w=document.getElementById('spkWave'); if(!w)return;
+  if(waveTimer)clearInterval(waveTimer);
+  let t=0;
+  waveTimer=setInterval(()=>{t++;const n=(t%5)+1;w.textContent='▮'.repeat(n)+'▯'.repeat(5-n);if(!document.querySelector('.mic-btn.recording')){clearInterval(waveTimer);w.textContent='▮▯▯▯▯';}},220);
+}
 function levenshtein(a,b){const m=a.length,n=b.length;const dp=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);for(let j=0;j<=n;j++)dp[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return dp[m][n];}
 function grade(ok,q,correctMsg,grammar,example){
   const k=L();
   state.total[k]++;
-  if(ok){state.correct[k]++;state.streak[k]++;state.xp[k]+=10;}
-  else{state.streak[k]=0;if(!state.wrongBook[k].some(w=>w.data===q.data))state.wrongBook[k].push(q);}
+  if(ok){state.correct[k]++;state.streak[k]++;state.xp[k]+=10;if(state.hearts[k]<5)state.hearts[k]++;}
+  else{state.streak[k]=0;if(state.hearts[k]>0)state.hearts[k]--;if(!state.wrongBook[k].some(w=>w.data===q.data))state.wrongBook[k].push(q);}
   save();updateHeader();
   const fb=document.getElementById('fb');
   fb.className='feedback show '+(ok?'good':'bad');
   fb.innerHTML='<div class="fb-title">'+(ok?'✅ 正确！+10 XP':'❌ 错误 · 语法详解')+'</div><div class="fb-body"><div>'+correctMsg+'</div><div class="grammar"><b>📖 语法/词汇详解：</b><br>'+grammar+'</div>'+(example?'<div class="example">例句：'+example+'</div>':'')+(!ok?'<div class="example" style="color:var(--accent3)">已加入错题本，可在「错题本」中复习。</div>':'')+'</div>';
   document.getElementById('nextBtn').style.display='inline-block';
+  mascotSay(ok?'good':'bad');
+  if(state.hearts[k]<=0){setTimeout(()=>{setStatus('❤️ 生命用完了！回到首页休息一下再战。','bad');},400);}
 }
 // ===== 语言切换 =====
 document.querySelectorAll('#langSwitch button').forEach(btn=>{
@@ -726,7 +867,7 @@ document.querySelectorAll('#langSwitch button').forEach(btn=>{
     btn.classList.add('on');
     state.lang=btn.dataset.lang;
     state.lesson=null; state.step=0; state.queue=[];
-    save(); showHome();
+    save(); showHome(); mascotSay('hi');
   };
 });
 document.getElementById('homeBtn').onclick=showHome;
@@ -746,7 +887,8 @@ document.getElementById('grammarBtn').onclick=()=>{
   c.innerHTML=html;setStatus('语法详解汇总','');setProg(0);
 };
 document.getElementById('reviewBtn').onclick=startWrong;
-load();showHome();updateHeader();
+load();showHome();updateHeader();renderCharTabs();
+document.getElementById('mascot').onclick=()=>mascotSay('hi');
 </script>
 </body>
 </html>
